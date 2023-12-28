@@ -1,9 +1,11 @@
 package com.a.chaban.uservice.userservice.services;
 
 import com.a.chaban.uservice.userservice.models.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Service;
 
-public interface UserService extends JpaRepository<User, Long> {
+
+@Service
+public interface UserService {
 
         User findByUsername(String username);
 
