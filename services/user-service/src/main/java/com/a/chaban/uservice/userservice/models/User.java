@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ public class User {
     private String username;
 
     @Column(length = 1000)
+    @JsonIgnore
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

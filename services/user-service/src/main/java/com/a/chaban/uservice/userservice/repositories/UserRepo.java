@@ -1,4 +1,4 @@
-package com.a.chaban.uservice.userservice.repository;
+package com.a.chaban.uservice.userservice.repositories;
 
 import com.a.chaban.uservice.userservice.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
