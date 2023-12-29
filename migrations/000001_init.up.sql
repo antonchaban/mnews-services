@@ -1,11 +1,11 @@
-create table customer
+create table users
 (
-    customer_id serial primary key,
+    id serial primary key,
     password    varchar(1000),
-    username    varchar(255)
+    username    varchar(255) not null unique
 );
 
-alter table customer
+alter table users
     owner to postgres;
 
 create table article
@@ -20,7 +20,7 @@ create table article
     article_title_en       varchar(500),
     customer_customer_id   bigint
         constraint fk8qj8c8w32ufmvytrlmlkglep5
-            references customer
+            references users
 );
 
 alter table article
@@ -37,25 +37,25 @@ create table article_category
 alter table article_category
     owner to postgres;
 
-create table customer_role
+create table role
 (
-    customer_id bigint not null
+    id bigint not null
         constraint fkrk3268jfmu796ejtnxt5pa4kt
-            references customer,
+            references users,
     roles       varchar(255)
 );
 
-alter table customer_role
+alter table role
     owner to postgres;
 
-insert into customer (password, username)
+insert into users (password, username)
 values ('$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'antoha'),
        ('$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'UNIAN'),
        ('$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'FOX'),
        ('$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'CNN'),
        ('$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'PRAVDA');
 
-insert into customer_role (customer_id, roles)
+insert into role (id, roles)
 values (1, 'ROLE_ADMIN'),
        (2, 'ROLE_EDITOR'),
        (3, 'ROLE_EDITOR'),

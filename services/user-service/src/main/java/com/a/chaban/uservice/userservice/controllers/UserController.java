@@ -17,7 +17,7 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
 
-    @GetMapping("users") //
+    @GetMapping("users") // todo password should not be returned
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
