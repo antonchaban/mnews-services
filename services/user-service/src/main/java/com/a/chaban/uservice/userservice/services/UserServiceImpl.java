@@ -1,8 +1,10 @@
 package com.a.chaban.uservice.userservice.services;
 
+import com.a.chaban.uservice.userservice.dtos.UserDto;
 import com.a.chaban.uservice.userservice.models.Role;
 import com.a.chaban.uservice.userservice.models.User;
 import com.a.chaban.uservice.userservice.repositories.UserRepo;
+import com.a.chaban.uservice.userservice.utils.MappingUtils;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
+    private final MappingUtils mappingUtils;
 
 
     @Override
@@ -29,8 +32,8 @@ public class UserServiceImpl implements UserService {
         return userRepo.findUserById(id);
     }
 
-    public List<User> findAll() {
-        return userRepo.findAll();
+    public List<UserDto> findAll() {
+        return userRepo.findAll().stream().map(mappingUtils::mapToUserDto).toList();
     }
 
     public User createUser(User user) throws NameAlreadyBoundException {

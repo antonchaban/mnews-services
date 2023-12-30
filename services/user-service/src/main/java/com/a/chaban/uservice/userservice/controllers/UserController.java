@@ -1,6 +1,7 @@
 package com.a.chaban.uservice.userservice.controllers;
 
 
+import com.a.chaban.uservice.userservice.dtos.UserDto;
 import com.a.chaban.uservice.userservice.models.User;
 import com.a.chaban.uservice.userservice.services.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -17,8 +18,8 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
 
-    @GetMapping("users") // todo password should not be returned
-    public ResponseEntity<List<User>> getAllUsers() {
+    @GetMapping("users")
+    public ResponseEntity<List<UserDto>> getAllUsers() {
         return ResponseEntity.ok(userService.findAll());
     }
 
