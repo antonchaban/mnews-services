@@ -5,8 +5,6 @@ create table users
     username    varchar(255) not null unique
 );
 
-alter table users
-    owner to postgres;
 
 create table article
 (
@@ -23,9 +21,6 @@ create table article
             references users
 );
 
-alter table article
-    owner to postgres;
-
 create table article_category
 (
     article_id bigint not null
@@ -34,8 +29,6 @@ create table article_category
     categories varchar(255)
 );
 
-alter table article_category
-    owner to postgres;
 
 create table role
 (
@@ -45,8 +38,6 @@ create table role
     roles       varchar(255)
 );
 
-alter table role
-    owner to postgres;
 
 insert into users (password, username)
 values ('$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'antoha'),

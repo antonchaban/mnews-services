@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-service-deployment
+spec:
+  replicas: 1                      # кількість екземплярів Pod, що буде створено цим Deployment
+  selector:
+    matchLabels:
+      app: client-service               # селектор по якому Deployment зв'язаний з Pod
+  template:
+    metadata:
+      labels:
+        app: client-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
+    spec:
+      containers:
+        - image: antohachaban/client-service:latest       # образ Docker
+          imagePullPolicy: IfNotPresent  
+          name: client-service           # ім'я контейнеру
+          ports:
+            - containerPort: 80  # порт по якому можна звертатись до поди

@@ -16,6 +16,7 @@ import axios from "../api/client";
 import LoginDTO from "../dto/LoginDTO";
 import Cookies from "../cookies";
 import Endpoints from "../api/endpoints";
+import UserDTO from "../dto/UserDTO";
 
 export default function Login() {
 
@@ -31,19 +32,20 @@ export default function Login() {
         let username = data.get("username");
         let password = data.get("password");
 
-        if (typeof username !== "string" || typeof password !== "string") {
+        if (typeof username !== "string" ||
+            typeof password !== "string") {
+            //Maybe handle as error in future
             console.error("Username or password is not string");
             return;
         }
 
+        let user: UserDTO = {
+            username: username,
+            password: password
+        }
+
         axios.post<LoginDTO>(
-            Endpoints.PATH_LOGIN, null,
-            {
-                params: {
-                    "username": username,
-                    "password": password
-                }
-            })
+            Endpoints.PATH_LOGIN, user)
             .then(res => {
                 if (res.status !== 200) {
                     return;

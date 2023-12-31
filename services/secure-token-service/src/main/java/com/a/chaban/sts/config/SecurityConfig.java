@@ -24,13 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-    @Bean
+/*    @Bean
     public PasswordEncoder passwordEncoder() {
         String idForEncode = "bcrypt";
         Map<String,PasswordEncoder> encoders = new HashMap<>();
         encoders.put(idForEncode, new BCryptPasswordEncoder());
 
         return new DelegatingPasswordEncoder(idForEncode, encoders);
+    }*/
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(6);
     }
 
     @Override

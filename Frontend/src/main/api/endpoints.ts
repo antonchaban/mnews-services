@@ -6,8 +6,7 @@ enum Endpoints {
     API_URL = "http://localhost",
     PATH_LOGIN = "login",
     PATH_LINKS = "api/links",
-    PATH_USERS = "api/user/users",
-    PATH_SCHEDULER = "api/scheduler"
+    PATH_USERS = "api/users"
 }
 
 export default Endpoints;

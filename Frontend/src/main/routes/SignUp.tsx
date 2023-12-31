@@ -46,12 +46,7 @@ export default function SignUp() {
             password: password
         }
 
-        axios.post<UserDTO>(Endpoints.PATH_USERS, null, {
-            params: {
-                username: user.username,
-                password: user.password
-            }
-        })
+        axios.post<UserDTO>(Endpoints.PATH_USERS, user)
             .then(res => {
                 if (res.status !== 200) {
                     return;

@@ -5,7 +5,10 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -26,8 +29,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class AuthFilter extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authManager;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
+/*    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -36,7 +40,21 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         return authManager.authenticate(token);
+    }*/
+@Override
+public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+    try {
+        // Read the credentials from the request body
+        Credentials credentials = objectMapper.readValue(request.getInputStream(), Credentials.class);
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(credentials.getUsername(), credentials.getPassword());
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        return authManager.authenticate(token);
+    } catch (IOException e) {
+        throw new AuthenticationServiceException("Error reading credentials from the request body", e);
     }
+}
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
@@ -63,5 +81,12 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
 
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), tokens);
+    }
+
+    @Getter@Setter
+    static
+    class Credentials {
+        private String username;
+        private String password;
     }
 }
