@@ -6,26 +6,26 @@ create table users
 );
 
 
-create table article
+create table articles
 (
-    article_id             serial primary key,
+    id             serial primary key,
     article_date           timestamp,
-    article_description    varchar(2048),
-    article_description_en varchar(2048),
-    article_link           varchar(255),
-    article_source         varchar(255),
-    article_title          varchar(500),
-    article_title_en       varchar(500),
-    customer_customer_id   bigint
+    description_ua    varchar(2048),
+    description_en varchar(2048),
+    link           varchar(255),
+    source         varchar(255),
+    title_ua         varchar(500),
+    title_en       varchar(500),
+    customer_id   bigint
         constraint fk8qj8c8w32ufmvytrlmlkglep5
             references users
 );
 
-create table article_category
+create table category
 (
     article_id bigint not null
         constraint fkrw5912jiy0vyqoyqlo5r65igk
-            references article,
+            references articles,
     categories varchar(255)
 );
 
