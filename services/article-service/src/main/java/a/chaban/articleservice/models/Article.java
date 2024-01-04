@@ -53,6 +53,7 @@ public class Article {
 //    private Customer customer;
 
 
+
     @Transient
     @ToString.Exclude
     private Long customerId;
