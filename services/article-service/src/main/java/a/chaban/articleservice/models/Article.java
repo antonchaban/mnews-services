@@ -46,13 +46,13 @@ public class Article {
     @Enumerated(EnumType.STRING)
     private Set<Category> categories = new HashSet<>();
 
-//    @ToString.Exclude
-//    @ManyToOne(cascade = CascadeType.REFRESH)
-//    @JoinColumn
-//    private Customer customer;
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn
+    private User user;
 
 
     @Transient
     @ToString.Exclude
-    private Long customerId;
+    private Long userId;
 }

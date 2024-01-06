@@ -16,14 +16,14 @@ create table articles
     source         varchar(255),
     title_ua         varchar(500),
     title_en       varchar(500),
-    customer_id   bigint
+    user_id   bigint
         constraint fk8qj8c8w32ufmvytrlmlkglep5
             references users
 );
 
 create table category
 (
-    article_id bigint not null
+    id bigint not null
         constraint fkrw5912jiy0vyqoyqlo5r65igk
             references articles,
     categories varchar(255)
