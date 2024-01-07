@@ -1,8 +1,8 @@
 package a.chaban.articleservice.services;
 
 
-import org.springframework.stereotype.Service;
+import a.chaban.articleservice.models.Article;
 
-@Service
 public interface ArticleService {
+    Article findById(long artId);
 }

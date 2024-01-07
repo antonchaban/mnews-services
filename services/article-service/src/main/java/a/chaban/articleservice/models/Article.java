@@ -1,6 +1,8 @@
 package a.chaban.articleservice.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +19,12 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Article {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long articleId;
+    private Long id;
 
     private String link;
 
@@ -49,6 +52,7 @@ public class Article {
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn
+    @JsonIgnore
     private User user;
 
 
