@@ -35,4 +35,13 @@ public class ArticleController {
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         return ResponseEntity.ok(articleService.save(article));
     }
+
+    @GetMapping("/articles")
+    public ResponseEntity<List<Article>> viewArticles(@RequestParam(name = "searchCategory", defaultValue = "") String searchCategory,
+                               @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
+                               @CookieValue(name = "language", defaultValue = "en") String language,
+                               @RequestParam(name = "searchSource", defaultValue = "") String searchSource,
+                               @RequestParam(name = "newsDate", defaultValue = "") String newsDate) {
+        return ResponseEntity.ok(articleService.listArticles(searchWord, searchSource, language, newsDate, searchCategory));
+    }
 }

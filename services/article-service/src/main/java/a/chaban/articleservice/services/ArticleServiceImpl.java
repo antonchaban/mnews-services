@@ -40,4 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepo.findAllByUser(userRepo.findById(userId).orElse(null));
     }
 
+    public List<Article> listArticles(String searchWord, String searchSource, String language, String newsDate,
+                                      String searchCategory) // todo implement
+    {
+        return articleRepo.findAll();
+    }
 }
