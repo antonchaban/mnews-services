@@ -1,6 +1,7 @@
 package a.chaban.articleservice.services;
 
 import a.chaban.articleservice.dtos.ArticleCreateDTO;
+import a.chaban.articleservice.dtos.DTOEntity;
 import a.chaban.articleservice.models.Article;
 import a.chaban.articleservice.repositories.ArticleRepo;
 import a.chaban.articleservice.repositories.UserRepo;
@@ -22,7 +23,7 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepo.findById(artId).orElse(null);
     }
 
-    public Article save(ArticleCreateDTO article) {
+    public Article save(DTOEntity article) {
         return articleRepo.save((Article) new DtoUtils().convertToEntity(new Article(), article));
     }
 
