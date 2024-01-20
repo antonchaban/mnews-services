@@ -1,8 +1,10 @@
 package a.chaban.articleservice.services;
 
+import a.chaban.articleservice.dtos.ArticleCreateDTO;
 import a.chaban.articleservice.models.Article;
 import a.chaban.articleservice.repositories.ArticleRepo;
 import a.chaban.articleservice.repositories.UserRepo;
+import a.chaban.articleservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,8 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepo.findById(artId).orElse(null);
     }
 
-    public Article save(Article article) {
-        return articleRepo.save(article);
+    public Article save(ArticleCreateDTO article) {
+        return articleRepo.save((Article) new DtoUtils().convertToEntity(new Article(), article));
     }
 
     public void deleteById(long artId) {

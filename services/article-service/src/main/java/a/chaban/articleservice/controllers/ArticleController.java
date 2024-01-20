@@ -1,6 +1,7 @@
-package a.chaban.articleservice.config;
+package a.chaban.articleservice.controllers;
 
 
+import a.chaban.articleservice.dtos.ArticleCreateDTO;
 import a.chaban.articleservice.models.Article;
 import a.chaban.articleservice.services.ArticleServiceImpl;
 import lombok.AllArgsConstructor;
@@ -32,8 +33,8 @@ public class ArticleController {
     }
 
     @PostMapping("articles")
-    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
-        return ResponseEntity.ok(articleService.save(article));
+    public ResponseEntity<Article> createArticle(@RequestBody ArticleCreateDTO article) {
+        return ResponseEntity.ok(articleService.save(article)); // todo not tested
     }
 
     @GetMapping("/articles")
