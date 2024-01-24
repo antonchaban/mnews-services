@@ -15,7 +15,7 @@ public class RabbitMessageServiceApplication {
         SpringApplication.run(RabbitMessageServiceApplication.class, args);
     }
 
-    @Value("${spring.rabbitmq.host}")
+/*    @Value("${spring.rabbitmq.host}")
     private String rabbitHost;
 
     @Bean
@@ -26,5 +26,5 @@ public class RabbitMessageServiceApplication {
     @Bean
     public ConnectionFactory connectionFactory() {
         return new CachingConnectionFactory(rabbitHost);
-    }
+    }*/
 }
