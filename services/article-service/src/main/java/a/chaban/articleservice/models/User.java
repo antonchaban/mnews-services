@@ -38,9 +38,5 @@ public class User {
     @ToString.Exclude
     @JsonIgnore
     private List<Article> articles;
-
-    private enum Role {
-        ROLE_EDITOR, ROLE_ADMIN;
-    }
 }
 
