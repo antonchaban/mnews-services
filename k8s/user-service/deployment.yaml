@@ -14,11 +14,11 @@ spec:
     spec:
       initContainers:
         - name: run-migrations-news
-          image: antohachaban/service-migrations:latest 
+          image: antohachaban/user-service-migrations:latest 
           command: ["migrate", "-path", "/migrations", "-database", "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
             - name: POSTGRESQL_URL
-              value: "postgres://admin:admin@postgres:5432/mnews?sslmode=disable"
+              value: "postgres://admin:admin@postgres:5432/mnews_users?sslmode=disable"
             - name: VERSION
               value: "000001"
       containers:
