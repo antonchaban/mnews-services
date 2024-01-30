@@ -6,8 +6,6 @@ create table users
     username varchar(255)
 );
 
-alter table users
-    owner to postgres;
 
 create table articles
 (
@@ -25,9 +23,6 @@ create table articles
             references users
 );
 
-alter table articles
-    owner to postgres;
-
 create table category
 (
     id         bigint not null
@@ -38,9 +33,6 @@ create table category
             check ((categories)::text = ANY
                    ((ARRAY ['CATEGORY_WAR'::character varying, 'CATEGORY_SPORT'::character varying, 'CATEGORY_ECONOMY'::character varying, 'CATEGORY_ENTERTAINMENT'::character varying, 'CATEGORY_SCIENCE'::character varying, 'CATEGORY_OTHER'::character varying])::text[]))
 );
-
-alter table category
-    owner to postgres;
 
 create table role
 (
@@ -53,6 +45,16 @@ create table role
                    ((ARRAY ['ROLE_EDITOR'::character varying, 'ROLE_ADMIN'::character varying])::text[]))
 );
 
-alter table role
-    owner to postgres;
+insert into users (id, password, username)
+values (1, '$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'antoha'),
+       (2, '$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'UNIAN'),
+       (3, '$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'FOX'),
+       (4, '$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'CNN'),
+       (5, '$2a$06$Vb6T.hosjM1TTw.iUONIbeFRuSpQK1BpwOz.xmsNRYZTeYdhtBNX2', 'PRAVDA');
 
+insert into role (id, roles)
+values (1, 'ROLE_ADMIN'),
+       (2, 'ROLE_EDITOR'),
+       (3, 'ROLE_EDITOR'),
+       (4, 'ROLE_EDITOR'),
+       (5, 'ROLE_EDITOR');
