@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class ArticleParser {
     private final String FOX_LINK = "https://moxie.foxnews.com/google-publisher/world.xml";
     private final String UNIAN_LINK = "https://rss.unian.net/site/news_ukr.rss";
 
-    public Article parseArticle(String link) throws FeedException, IOException, ParseException { // todo removed check for dublicates in db
+    public List<Article> parseArticle(String link) throws FeedException, IOException, ParseException { // todo removed check for dublicates in db
         ArrayList<Article> listFromRss = articleRssParser.doParse(link);
         for (Article articleRss : listFromRss) {
 //            if (articleRepo.findArticleByArticleLink(articleRss.getArticleLink()) == null) {
@@ -35,12 +36,11 @@ public class ArticleParser {
                         .add(categoryParser
                                 .doParse(articleRss.getArticleTitleEn() + articleRss.getArticleDescriptionEn()));*/ // todo add categories from category detector service
                 System.out.println(articleRss);
-                return articleRss;
             }
 //            }
 
         }
-        throw new NullPointerException("No new articles"); // todo
+        return listFromRss.isEmpty() ? null : listFromRss;
     }
 
     private void parseAssist(Article articleRss, String source) throws IOException, ParseException {
