@@ -1,13 +1,13 @@
 package a.chaban.fict.parsing.parsingservice.services.translation;
 
 import a.chaban.fict.parsing.parsingservice.services.Parser;
-import a.chaban.fict.parsing.parsingservice.services.translation.APIConnector;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,9 +22,12 @@ public class TranslateAPIParser implements Parser<String> {
 
     private final APIConnector apiConnector;
 
+    @Value("${translate.url}")
+    public String translateUrl; // maybe url?
+
     @Override
     public String doParse(String textToTranslate) throws IOException, ParseException {
-        HttpURLConnection conn = apiConnector.setTranslateAPIConnection("translate");
+        HttpURLConnection conn = apiConnector.setConnection(translateUrl + "translate");
         try {
             String jsonInputString = "{\"q\":" + "\"" + textToTranslate.replace("\"", "\\\"") + "\""
                     + ", \"source\": \"uk\"," +
@@ -37,7 +40,7 @@ public class TranslateAPIParser implements Parser<String> {
     }
 
     public String doParse(String textToTranslate, String source, String target) throws IOException, ParseException {
-        HttpURLConnection conn = apiConnector.setTranslateAPIConnection("translate");
+        HttpURLConnection conn = apiConnector.setConnection(translateUrl + "translate");
         try {
             String jsonInputString = "{\"q\":" + "\"" + textToTranslate.replace("\"", "\\\"")
                     .replace("\r\n", ",")
@@ -79,7 +82,7 @@ public class TranslateAPIParser implements Parser<String> {
     }
 
     public String detectLanguage(String text) throws IOException, ParseException {
-        HttpURLConnection conn = apiConnector.setTranslateAPIConnection("detect");
+        HttpURLConnection conn = apiConnector.setConnection(translateUrl + "detect");
         try {
             String jsonInputString = "{\"q\":" + "\"" + text.replace("\"", "\\\"") + "\"}";
             return getString(conn, jsonInputString, "language");

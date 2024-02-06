@@ -11,12 +11,11 @@ import java.net.URL;
 @Service
 public class APIConnector implements Connector {
 
-    @Value("${translate.url}")
-    public URL translateUrl;
+
 
     @Override
-    public HttpURLConnection setTranslateAPIConnection(String page) throws IOException {
-        URL url = new URL(translateUrl + page);
+    public HttpURLConnection setConnection(String pageUrl) throws IOException {
+        URL url = new URL(pageUrl);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("POST");
         conn.setRequestProperty("Content-Type", "application/json");

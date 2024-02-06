@@ -61,7 +61,8 @@ public class Article {
         WORLDPOST,
         FIFTY,
         ARTS,
-        DIVORCE
+        DIVORCE,
+        UNKNOWN
     }
 
 }
