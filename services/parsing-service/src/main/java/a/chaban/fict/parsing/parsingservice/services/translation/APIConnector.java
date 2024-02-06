@@ -1,5 +1,6 @@
-package a.chaban.fict.parsing.parsingservice.services;
+package a.chaban.fict.parsing.parsingservice.services.translation;
 
+import a.chaban.fict.parsing.parsingservice.services.Connector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

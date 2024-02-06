@@ -1,5 +1,7 @@
-package a.chaban.fict.parsing.parsingservice.services;
+package a.chaban.fict.parsing.parsingservice.services.translation;
 
+import a.chaban.fict.parsing.parsingservice.services.Parser;
+import a.chaban.fict.parsing.parsingservice.services.translation.APIConnector;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

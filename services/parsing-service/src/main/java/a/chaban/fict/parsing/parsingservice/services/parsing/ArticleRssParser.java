@@ -1,6 +1,8 @@
-package a.chaban.fict.parsing.parsingservice.services;
+package a.chaban.fict.parsing.parsingservice.services.parsing;
 
 import a.chaban.fict.parsing.parsingservice.entities.Article;
+import a.chaban.fict.parsing.parsingservice.services.Parser;
+import a.chaban.fict.parsing.parsingservice.services.translation.TranslateAPIParser;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;

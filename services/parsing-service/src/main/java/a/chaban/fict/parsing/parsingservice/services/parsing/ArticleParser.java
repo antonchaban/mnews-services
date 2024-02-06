@@ -1,7 +1,8 @@
-package a.chaban.fict.parsing.parsingservice.services;
+package a.chaban.fict.parsing.parsingservice.services.parsing;
 
 
 import a.chaban.fict.parsing.parsingservice.entities.Article;
+import a.chaban.fict.parsing.parsingservice.services.translation.TranslateAPIParser;
 import com.sun.syndication.io.FeedException;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
@@ -21,7 +22,7 @@ public class ArticleParser {
     private final String FOX_LINK = "https://moxie.foxnews.com/google-publisher/world.xml";
     private final String UNIAN_LINK = "https://rss.unian.net/site/news_ukr.rss";
 
-    public List<Article> parseArticle(String link) throws FeedException, IOException, ParseException { // todo removed check for dublicates in db
+    public List<Article> parseArticle(String link) throws FeedException, IOException, ParseException { // need to check for duplicates in article service
         ArrayList<Article> listFromRss = articleRssParser.doParse(link);
         for (Article articleRss : listFromRss) {
 //            if (articleRepo.findArticleByArticleLink(articleRss.getArticleLink()) == null) {

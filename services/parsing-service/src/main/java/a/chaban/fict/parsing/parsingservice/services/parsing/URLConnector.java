@@ -1,5 +1,6 @@
-package a.chaban.fict.parsing.parsingservice.services;
+package a.chaban.fict.parsing.parsingservice.services.parsing;
 
+import a.chaban.fict.parsing.parsingservice.services.Connector;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
