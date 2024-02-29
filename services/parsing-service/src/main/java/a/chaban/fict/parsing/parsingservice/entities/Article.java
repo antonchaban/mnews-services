@@ -43,7 +43,7 @@ public class Article {
         HOME_AND_LIVING,
         WOMEN,
         BLACK_VOICES,
-        TRAVEL,
+        GEOPOLITICS,
         MONEY,
         RELIGION,
         LATINO_VOICES,

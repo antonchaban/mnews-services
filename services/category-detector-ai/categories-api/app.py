@@ -29,7 +29,7 @@ label_to_category = {
     20: "HOME_AND_LIVING",
     21: "WOMEN",
     22: "BLACK_VOICES",
-    23: "TRAVEL",
+    23: "GEOPOLITICS",
     24: "MONEY",
     25: "RELIGION",
     26: "LATINO_VOICES",
