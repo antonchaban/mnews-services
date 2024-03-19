@@ -34,3 +34,27 @@ spec:
   hostPath:
     path: /mnt/app/rabbitmq
     type: DirectoryOrCreate
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: rabbitmq-service
+# spec:
+#   selector:
+#     app: rabbitmq
+#   ports:
+#     - protocol: TCP
+#       port: 5672
+#       targetPort: 5672
+---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: rabbitmq-management
+# spec:
+#   selector:
+#     app: rabbitmq
+#   ports:
+#     - protocol: TCP
+#       port: 15672
+#       targetPort: 15672
