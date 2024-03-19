@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: secure-service-config
 data:
-  POSTGRES_DB: "mnews"
+  POSTGRES_DB: "mnews_users"
   POSTGRES_HOST: "postgres:5432"

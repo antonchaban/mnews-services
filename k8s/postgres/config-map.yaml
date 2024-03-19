@@ -4,3 +4,14 @@ metadata:
   name: postgres-config
 data:
   POSTGRES_DB: mnews
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+data:
+  init.sql: |
+    CREATE DATABASE mnews_users;
+    CREATE DATABASE mnews_articles;

@@ -5,3 +5,4 @@ metadata:
 data:
   POSTGRES_DB: "mnews_users"
   POSTGRES_HOST: "postgres:5432"
+  RABBITMQ_HOST: "rabbitmq"
