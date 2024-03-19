@@ -34,6 +34,18 @@ spec:
   hostPath:
     path: /mnt/app/rabbitmq
     type: DirectoryOrCreate
+---
+kind: Secret
+apiVersion: v1
+metadata:
+  name: rabbitmq-cluster-default-user
+stringData:
+  default_user.conf: |
+    default_user = mdmbd771i3zftBt44Ed97lBWVcyqmnlL
+    default_pass = Vc-d8LWI_yQJFOK23p0PZAbpItXFcbl6
+  password: Vc-d8LWI_yQJFOK23p0PZAbpItXFcbl6
+  username: mdmbd771i3zftBt44Ed97lBWVcyqmnlL
+type: Opaque
 # ---
 # apiVersion: v1
 # kind: Service
