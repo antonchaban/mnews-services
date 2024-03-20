@@ -25,7 +25,7 @@ public class ArticleServiceImpl implements ArticleService {
         return articleRepo.findById(artId).orElse(null);
     }
 
-    public Article save(DTOEntity article) {
+    public Article save(DTOEntity article) { // todo check why date not saved https://prnt.sc/V8FvVq3UTmxS
         var savedArticle = (Article) new DtoUtils().convertToEntity(new Article(), article);
         if (savedArticle.getArticleDate() == null) savedArticle.setArticleDate(Date.from(Instant.now()));
         return articleRepo.save(savedArticle);
