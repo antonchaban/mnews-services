@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: secure-service-ingress
+  name: article-service-ingress
   annotations:
     kubernetes.io/ingress.class: "nginx"
 spec:
   rules:
     - http:
         paths:
-          - path: /login
-            pathType: ImplementationSpecific
+          - path: /api/articles
+            pathType: "Prefix"
             backend:
               service:
-                name: secure-service-service
+                name: article-service-service
                 port:
                   number: 80

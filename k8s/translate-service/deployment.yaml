@@ -1,0 +1,40 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: translate-service-deployment
+# spec:
+#   replicas: 1                      # кількість екземплярів Pod, що буде створено цим Deployment
+#   selector:
+#     matchLabels:
+#       app: translate-service               # селектор по якому Deployment зв'язаний з Pod
+#   template:
+#     metadata:
+#       labels:
+#         app: translate-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
+#     spec:
+#       containers:
+#         - image: libretranslate/libretranslate:latest       # образ Docker
+#           imagePullPolicy: IfNotPresent  
+#           name: translate-service           # ім'я контейнеру
+#           ports:
+#             - containerPort: 8080  # порт по якому можна звертатись до поди
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: libretranslate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: libretranslate
+  template:
+    metadata:
+      labels:
+        app: libretranslate
+    spec:
+      containers:
+      - name: libretranslate
+        image: antohachaban/libretranslate:latest
+        ports:
+        - containerPort: 8080
