@@ -15,20 +15,20 @@
 #                 name: translate-service-service
 #                 port:
 #                   number: 80
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: translate-service-ingress
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /api/translate
-            pathType: "Prefix"
-            backend:
-              service:
-                name: translate-service
-                port:
-                  number: 80  # Update this port to match the port your service is listening on
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: translate-service-ingress
+#   annotations:
+#     kubernetes.io/ingress.class: "nginx"
+# spec:
+#   rules:
+#     - http:
+#         paths:
+#           - path: /api/translate
+#             pathType: "Prefix"
+#             backend:
+#               service:
+#                 name: translate-service
+#                 port:
+#                   number: 80  # Update this port to match the port your service is listening on

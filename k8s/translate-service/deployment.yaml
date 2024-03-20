@@ -19,22 +19,45 @@
 #           ports:
 #             - containerPort: 8080  # порт по якому можна звертатись до поди
 ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: libretranslate
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: libretranslate
+#   template:
+#     metadata:
+#       labels:
+#         app: libretranslate
+#     spec:
+#       containers:
+#       - name: libretranslate
+#         image: antohachaban/libretranslate:latest
+#         ports:
+#         - containerPort: 8080
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: libretranslate
+  name: libretranslate-deploy
+  labels:
+    type: libretranslate
 spec:
-  replicas: 1
-  selector:
+  selector: 
     matchLabels:
       app: libretranslate
+  replicas: 3
   template:
     metadata:
+      name: libretranslate
       labels:
         app: libretranslate
     spec:
       containers:
-      - name: libretranslate
-        image: antohachaban/libretranslate:latest
-        ports:
-        - containerPort: 8080
+        - name: antohachaban-libretranslate
+          image: antohachaban/libretranslate:latest
+          ports:
+            - containerPort: 5000

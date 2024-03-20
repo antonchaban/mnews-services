@@ -23,14 +23,27 @@
 #     port: 80
 #     targetPort: 5000
 
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: libretranslate
+# spec:
+#   selector:
+#     app: libretranslate
+#   ports:
+#     - port: 80
+#       targetPort: 5000
+#   type: ClusterIP
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: libretranslate
+  name: libretranslate-svc
 spec:
+  type: LoadBalancer
   selector:
     app: libretranslate
   ports:
-    - port: 80
+    - protocol: "TCP"
+      port: 80
       targetPort: 5000
-  type: ClusterIP
