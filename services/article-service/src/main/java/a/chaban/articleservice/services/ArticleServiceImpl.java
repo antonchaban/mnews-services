@@ -9,6 +9,8 @@ import a.chaban.articleservice.utils.DtoUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,7 +26,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     public Article save(DTOEntity article) {
-        return articleRepo.save((Article) new DtoUtils().convertToEntity(new Article(), article));
+        var savedArticle = (Article) new DtoUtils().convertToEntity(new Article(), article);
+        if (savedArticle.getArticleDate() == null) savedArticle.setArticleDate(Date.from(Instant.now()));
+        return articleRepo.save(savedArticle);
     }
 
     public void deleteById(long artId) {

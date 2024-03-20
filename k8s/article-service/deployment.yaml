@@ -1,34 +1,34 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-service-deployment
+  name: article-service-deployment
 spec:
   replicas: 1                      # кількість екземплярів Pod, що буде створено цим Deployment
   selector:
     matchLabels:
-      app: user-service               # селектор по якому Deployment зв'язаний з Pod
+      app: article-service               # селектор по якому Deployment зв'язаний з Pod
   template:
     metadata:
       labels:
-        app: user-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
+        app: article-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
     spec:
       initContainers:
         - name: run-migrations-news
-          image: antohachaban/user-service-migrations:latest 
+          image: antohachaban/article-service-migrations:latest 
           command: ["migrate", "-path", "/migrations", "-database", "$(POSTGRESQL_URL)", "goto", "$(VERSION)"]
           env:
             - name: POSTGRESQL_URL
-              value: "postgres://admin:admin@postgres:5432/mnews_users?sslmode=disable"
+              value: "postgres://admin:admin@postgres:5432/mnews_articles?sslmode=disable"
             - name: VERSION
               value: "000001"
       containers:
-        - image: antohachaban/user-service:latest       # образ Docker
+        - image: antohachaban/article-service:latest       # образ Docker
           imagePullPolicy: IfNotPresent  
-          name: user-service           # ім'я контейнеру
+          name: article-service           # ім'я контейнеру
           ports:
             - containerPort: 8080  # порт по якому можна звертатись до поди
           envFrom:
             - configMapRef:
-                name: user-service-config
+                name: article-service-config
             - secretRef:
-                name: user-service-secret  
+                name: article-service-secret  
