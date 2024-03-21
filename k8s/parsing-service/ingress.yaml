@@ -1,17 +1,17 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: article-service-ingress
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /api/articles
-            pathType: "Prefix"
-            backend:
-              service:
-                name: article-service-service
-                port:
-                  number: 80
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: article-service-ingress
+#   annotations:
+#     kubernetes.io/ingress.class: "nginx"
+# spec:
+#   rules:
+#     - http:
+#         paths:
+#           - path: /api/articles
+#             pathType: "Prefix"
+#             backend:
+#               service:
+#                 name: article-service-service
+#                 port:
+#                   number: 80

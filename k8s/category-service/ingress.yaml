@@ -14,4 +14,4 @@ spec:
               service:
                 name: category-service-service
                 port:
-                  number: 80
+                  number: 5001

@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: category-service-service
 spec:
-  type: LoadBalancer # ClusterIP
+  type: LoadBalancer #ClusterIP #
   ports:
     - protocol: "TCP"
-      port: 80
+      port: 5001
       targetPort: 5000
   selector:
     app: category-service
