@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: category-service-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /api/category-ai
+            pathType: "Prefix"
+            backend:
+              service:
+                name: category-service-service
+                port:
+                  number: 80
