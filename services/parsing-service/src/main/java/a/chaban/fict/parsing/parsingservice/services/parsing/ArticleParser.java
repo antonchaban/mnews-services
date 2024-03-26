@@ -2,15 +2,13 @@ package a.chaban.fict.parsing.parsingservice.services.parsing;
 
 
 import a.chaban.fict.parsing.parsingservice.entities.Article;
+import a.chaban.fict.parsing.parsingservice.services.messaging.RabbitMQArticleProducer;
 import a.chaban.fict.parsing.parsingservice.services.translation.APIConnector;
 import a.chaban.fict.parsing.parsingservice.services.translation.TranslateAPIParser;
 import com.sun.syndication.io.FeedException;
 import lombok.RequiredArgsConstructor;
-import org.json.simple.JSONArray;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -19,42 +17,52 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 @Service
 @RequiredArgsConstructor
 public class ArticleParser {
     private final ArticleRssParser articleRssParser;
     private final TranslateAPIParser translateAPIParser;
-    private final String PRAVDA_LINK = "https://www.pravda.com.ua/rss/";
-    private final String CNN_LINK = "http://rss.cnn.com/rss/cnn_topstories.rss";
-    private final String FOX_LINK = "https://moxie.foxnews.com/google-publisher/world.xml";
-    private final String UNIAN_LINK = "https://rss.unian.net/site/news_ukr.rss";
 
+    // Constants
+
+    @Value("${id.pravda}")
+    private Long PRAVDA_ID;
+    @Value("${id.cnn}")
+    private Long CNN_ID;
+    @Value("${id.fox}")
+    private Long FOX_ID;
+    @Value("${id.unian}")
+    private Long UNIAN_ID;
     private final APIConnector apiConnector;
 
     @Value("${category.url}")
     public String categoryUrl; // maybe url?
-    public List<Article> parseArticle(String link) throws FeedException, IOException, ParseException { // need to check for duplicates in article service
+
+    private final RabbitMQArticleProducer rabbitMQArticleProducer;
+
+    public void parseArticle(String link) throws FeedException, IOException, ParseException { // need to check for duplicates in article service
         ArrayList<Article> listFromRss = articleRssParser.doParse(link);
         for (Article articleRss : listFromRss) {
+            final String PRAVDA_LINK = "https://www.pravda.com.ua/rss/";
+            final String CNN_LINK = "http://rss.cnn.com/rss/cnn_topstories.rss";
+            final String FOX_LINK = "https://moxie.foxnews.com/google-publisher/world.xml";
+            final String UNIAN_LINK = "https://rss.unian.net/site/news_ukr.rss";
             switch (link) {
-                case PRAVDA_LINK -> parseAssist(articleRss, "PRAVDA");
-                case CNN_LINK -> parseAssist(articleRss, "CNN");
-                case FOX_LINK -> parseAssist(articleRss, "FOX NEWS");
-                case UNIAN_LINK -> parseAssist(articleRss, "УНІАН");
+                case PRAVDA_LINK -> parseAssist(articleRss, "PRAVDA", PRAVDA_ID);
+                case CNN_LINK -> parseAssist(articleRss, "CNN", CNN_ID);
+                case FOX_LINK -> parseAssist(articleRss, "FOX NEWS", FOX_ID);
+                case UNIAN_LINK -> parseAssist(articleRss, "УНІАН", UNIAN_ID);
             }
             if (articleRss.getArticleDate() != null) {
                 articleRss.getCategories()
                         .add(consumeCategory(articleRss.getTitle_en() + articleRss.getDescription_en()));
+                rabbitMQArticleProducer.sendArticleEntity(articleRss);
                 System.out.println(articleRss);
             }
 
         }
-        return listFromRss.isEmpty() ? null : listFromRss;
     }
 
     public Article.Category consumeCategory(String text) throws IOException {
@@ -94,9 +102,10 @@ public class ArticleParser {
         }
     }
 
-    private void parseAssist(Article articleRss, String source) throws IOException, ParseException {
+    private void parseAssist(Article articleRss, String source, Long id) throws IOException, ParseException {
         try {
-//            articleRss.setUserId(customerRepo.findById(ID).get());
+//            articleRss.setUserId(customerRepo.findById(ID).get()); todo
+            articleRss.setUserId(id);
             if (articleRss.getSource().isEmpty()) articleRss.setSource(source);
             try {
                 if (articleRss.getTitle_en().isEmpty()) {

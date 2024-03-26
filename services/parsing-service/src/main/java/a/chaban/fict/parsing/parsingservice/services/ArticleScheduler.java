@@ -22,15 +22,16 @@ public class ArticleScheduler {
             "https://rss.unian.net/site/news_ukr.rss"};
     // https://nv.ua/ukr/rss/all.xml - alternative
     private final ArticleParser articleParser;
-    private final RabbitMQArticleProducer rabbitMQArticleProducer;
+//    private final RabbitMQArticleProducer rabbitMQArticleProducer;
 
     @Scheduled(initialDelay = 10000, fixedDelayString = "PT30M") // on start and every 30 minutes
     public void updateArticles() throws FeedException, IOException, ParseException {
-        var articles = new ArrayList<Article>();
+//        var articles = new ArrayList<Article>();
         for (String resource : RESOURCES_LIST) {
-            articles.addAll(articleParser.parseArticle(resource));
+//            articles.addAll(articleParser.parseArticle(resource));
+            articleParser.parseArticle(resource);
             System.out.println("Update articles from: " + resource);
         }
-        for (Article article : articles) rabbitMQArticleProducer.sendArticleEntity(article);
+//        for (Article article : articles) rabbitMQArticleProducer.sendArticleEntity(article);
     }
 }
