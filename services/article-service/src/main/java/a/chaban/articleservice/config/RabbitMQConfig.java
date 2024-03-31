@@ -14,22 +14,22 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitMQConfig {
 
     @Value("${rabbitmq.user.queue.name}")
-    private String queueName;
+    private String userQueueName;
 
     @Value("${rabbitmq.user.exchange.name}")
-    private String exchangeName;
+    private String userExchangeName;
 
     @Value("${rabbitmq.user.routing.key.name}")
-    private String routingKey;
+    private String userRoutingKey;
 
     @Bean
     public Queue userQueue() {
-        return new Queue(queueName);
+        return new Queue(userQueueName);
     }
 
     @Bean
     public TopicExchange exchange() {
-        return new TopicExchange(exchangeName);
+        return new TopicExchange(userExchangeName);
     }
 
 
@@ -38,7 +38,37 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(userQueue())
                 .to(exchange())
-                .with(routingKey);
+                .with(userRoutingKey);
+    }
+
+    // Article config
+
+    @Value("${rabbitmq.article.queue.name}")
+    private String articleQueueName;
+
+    @Value("${rabbitmq.article.exchange.name}")
+    private String articleExchangeName;
+
+    @Value("${rabbitmq.article.routing.key.name}")
+    private String articleRoutingKey;
+
+    @Bean
+    public Queue articleQueue() {
+        return new Queue(articleQueueName);
+    }
+
+    @Bean
+    public TopicExchange articleExchange() {
+        return new TopicExchange(articleExchangeName);
+    }
+
+
+    @Bean
+    public Binding articleBinding() {
+        return BindingBuilder
+                .bind(articleQueue())
+                .to(articleExchange())
+                .with(articleRoutingKey);
     }
 
     @Bean
