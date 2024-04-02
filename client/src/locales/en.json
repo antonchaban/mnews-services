@@ -5,6 +5,7 @@
   "articleList.source": "Source",
   "articleList.date": "Date",
   "articleList.close": "Close",
+  "articleList.searchPlaceholder": "Search...",
   "articleList.allCategories": {
     "ALL_CATEGORIES": "All Categories",
     "U_S_NEWS": "U.S. News",
