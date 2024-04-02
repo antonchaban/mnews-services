@@ -1,23 +1,50 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {useTranslation} from 'react-i18next';
+import SearchBar from './SearchBar';
 
 const ArticleList = () => {
     const {t, i18n} = useTranslation();
     const [articles, setArticles] = useState([]);
     const [selectedArticle, setSelectedArticle] = useState(null); // State to manage selected article for modal
+    const [filteredArticles, setFilteredArticles] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost/api/articles')
             .then(response => {
-                // Sort articles by date from newest to oldest
-                const sortedArticles = response.data.sort((a, b) => new Date(b.articleDate) - new Date(a.articleDate));
-                setArticles(sortedArticles);
+                setArticles(response.data);
+                setFilteredArticles(response.data); // Initialize filteredArticles with all articles
             })
             .catch(error => {
                 console.error('Error fetching articles:', error);
             });
     }, []);
+
+    const handleSearch = (searchParams) => {
+        const { searchTerm, startDate, endDate, selectedCategory, selectedSource } = searchParams;
+
+        // Filter articles based on search parameters
+        let filtered = articles.filter(article => {
+            // Check if article title or description contains the search term
+            const matchesSearchTerm = article.title_en.toLowerCase().includes(searchTerm.toLowerCase()) || article.description_en.toLowerCase().includes(searchTerm.toLowerCase());
+
+            // Check if article date is within the specified date range
+            const articleDate = new Date(article.articleDate);
+            const isWithinDateRange = (!startDate || articleDate >= new Date(startDate)) && (!endDate || articleDate <= new Date(endDate));
+
+            // Check if article matches selected category
+            const matchesCategory = !selectedCategory || selectedCategory === "ALL_CATEGORIES" || article.categories.includes(selectedCategory);
+
+            // Check if article matches selected source
+            const matchesSource = !selectedSource || selectedSource === "ALL_SOURCES" || article.source === selectedSource;
+
+            return matchesSearchTerm && isWithinDateRange && matchesCategory && matchesSource;
+        });
+
+        setFilteredArticles(filtered);
+    };
+
+
 
     const handleViewMore = (article) => {
         setSelectedArticle(article); // Set selected article for modal
@@ -30,8 +57,9 @@ const ArticleList = () => {
     return (
         <div className="container">
             <h1 className="mb-4">{t('articleList.title')}</h1>
+            <SearchBar onSearch={handleSearch} />
             <div className="row">
-                {articles.map(article => (
+                {filteredArticles.map(article => (
                     <div className="col-md-4 mb-4" key={article.id}>
                         <div className="card">
                             <div className="card-body">
