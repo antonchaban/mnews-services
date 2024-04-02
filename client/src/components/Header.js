@@ -3,7 +3,7 @@ import React from 'react';
 import LanguageSwitcher from '../LanguageSwitcher';
 import AuthComponent from './AuthComponent'; // Import the AuthComponent
 
-const Header = ({ isLoggedIn }) => { // Receive isLoggedIn prop
+const Header = ({ isLoggedIn }) => {
     return (
         <header className="d-flex justify-content-between align-items-center">
             <div>

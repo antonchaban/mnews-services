@@ -14,7 +14,7 @@ const AuthComponent = ({ isLoggedIn }) => {
             <div>
                 <p>Please log in to view your profile.</p>
                 {/* Add link to login page */}
-                <a href="/login">Login</a>
+                <a href="/auth">Login</a>
             </div>
         );
     }
