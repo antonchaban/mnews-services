@@ -13,7 +13,7 @@ spec:
         app: client-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
     spec:
       containers:
-        - image: antohachaban/client-service:latest       # образ Docker
+        - image: antohachaban/clientv2-service:latest       # образ Docker
           imagePullPolicy: IfNotPresent  
           name: client-service           # ім'я контейнеру
           ports:
