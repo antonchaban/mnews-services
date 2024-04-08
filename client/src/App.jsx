@@ -1,10 +1,10 @@
-// App.js
+// App.jsx
 import React, { useState } from 'react';
 import Header from './components/Header';
 import ArticleList from './components/ArticleList';
-import Login from './components/Login'; // Import the Login component
+import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; // Update the import
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'; // Updated import
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -25,12 +25,16 @@ const App = () => {
             <div className="container">
                 <Header isLoggedIn={isLoggedIn} />
                 <main>
-                    <Routes> {/* Update to Routes */}
-                        <Route path="/" element={<ArticleList />} /> {/* Update Route */}
-                        <Route path="/auth" element={<Login onLogin={handleLogin} />} /> {/* Update Route */}
-                        {/*todo login page not opening, need to solve*/}
-                        {/*<Route path="/auth" element={<Login />} />*/}
-                    </Routes> {/* Update to Routes */}
+                    <Routes>
+                        {/* Redirect from "/" to "/articles" */}
+                        <Route path="/" element={<Navigate to="/articles" />} />
+
+                        {/* Route to display the ArticleList component */}
+                        <Route path="/articles" element={<ArticleList />} />
+
+                        {/* Route to display the Login component */}
+                        <Route path="/auth" element={<Login />} />
+                    </Routes>
                 </main>
                 <div className="text-right mt-3">
                     {isLoggedIn ? (

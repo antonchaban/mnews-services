@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const AuthComponent = ({ isLoggedIn }) => {
     if (isLoggedIn) {
@@ -6,7 +7,7 @@ const AuthComponent = ({ isLoggedIn }) => {
             <div>
                 <p>Welcome, User!</p>
                 {/* Add link to user profile */}
-                <a href="/profile">Profile</a>
+                <p><Link to="/profile">Profile</Link></p>
             </div>
         );
     } else {
@@ -14,7 +15,7 @@ const AuthComponent = ({ isLoggedIn }) => {
             <div>
                 <p>Please log in to view your profile.</p>
                 {/* Add link to login page */}
-                <a href="/auth">Login</a>
+                <p><Link to="/auth">Login</Link></p>
             </div>
         );
     }
