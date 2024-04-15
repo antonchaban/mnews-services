@@ -1,11 +1,12 @@
+// AuthComponent.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AuthComponent = ({ isLoggedIn }) => {
+const AuthComponent = ({ isLoggedIn, username }) => {
     if (isLoggedIn) {
         return (
             <div>
-                <p>Welcome, User!</p>
+                <p>Welcome, {username}!</p>
                 {/* Add link to user profile */}
                 <p><Link to="/profile">Profile</Link></p>
             </div>

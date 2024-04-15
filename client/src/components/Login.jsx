@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; // Assuming axios is imported from 'axios' package
-import { useCookies } from 'react-cookie'; // Assuming useCookies is imported from 'react-cookie' package
+import {Cookies, useCookies} from 'react-cookie'; // Assuming useCookies is imported from 'react-cookie' package
 import { Container, Box, Typography, Avatar, TextField, Button, Grid, Link } from '@mui/material'; // Assuming MUI components are used
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
 
 const Login = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     const accessToken = cookies[Cookies.ACCESS_TOKEN]
+    //     if (accessToken) {
+    //         setLoggedIn(true);
+    //     }
+    // }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();

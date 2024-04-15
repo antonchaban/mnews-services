@@ -1,6 +1,5 @@
 package a.chaban.articleservice.services;
 
-import a.chaban.articleservice.dtos.ArticleCreateDTO;
 import a.chaban.articleservice.dtos.DTOEntity;
 import a.chaban.articleservice.models.Article;
 import a.chaban.articleservice.repositories.ArticleRepo;
