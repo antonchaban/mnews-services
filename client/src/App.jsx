@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import {useCookies} from "react-cookie"; // Updated import
 import Cookies from './enums/cookies';
-
+import SignUp from './components/SignUp';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,6 +47,8 @@ const App = () => {
 
                         {/* Route to display the Login component */}
                         <Route path="/auth" element={<Login onLogin={handleLogin} />} />
+
+                        <Route path="/signup" element={<SignUp />} />
                     </Routes>
                 </main>
                 <div className="text-right mt-3">
