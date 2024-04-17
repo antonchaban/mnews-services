@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie"; // Updated import
 import Cookies from './enums/cookies';
 import SignUp from './components/SignUp';
 import Profile from "./components/Profile";
+import ArticleEdit from "./components/ArticleEdit";
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,6 +35,7 @@ const App = () => {
 
         // Redirect to "/articles" after logout
         return <Navigate to="/articles" replace />;
+    //     todo after logout button logout still visible
     };
 
 
@@ -55,6 +57,8 @@ const App = () => {
                         <Route path="/signup" element={<SignUp />} />
 
                         <Route path="/profile" element={<Profile />} />
+
+                        <Route path="/articles/:id/edit" element={<ArticleEdit />} />
                     </Routes>
                 </main>
                 <div className="text-right mt-3">
