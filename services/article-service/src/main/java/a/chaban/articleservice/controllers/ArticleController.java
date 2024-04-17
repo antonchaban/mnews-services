@@ -17,10 +17,18 @@ import java.util.List;
 public class ArticleController {
     private final ArticleServiceImpl articleService;
 
-    @GetMapping("articles")
-    public ResponseEntity<List<Article>> getAllArticles() {
-        return ResponseEntity.ok(articleService.findAll());
+    @GetMapping("/articles")
+    public ResponseEntity<List<Article>> getArticles(
+            @RequestParam(name = "userId", required = false) Long userId) {
+        List<Article> articles;
+        if (userId != null && userId > 0) {
+            articles = articleService.findAllByUserId(userId);
+        } else {
+            articles = articleService.findAll();
+        }
+        return ResponseEntity.ok(articles);
     }
+
 
     @GetMapping("articles/{id}")
     public ResponseEntity<Article> getArticleById(@PathVariable long id) {
@@ -43,11 +51,5 @@ public class ArticleController {
         var art = articleService.findById(id);
         art = articleService.save(article);
         return ResponseEntity.ok(art);
-    }
-
-    @GetMapping("/articles")
-    public ResponseEntity<List<Article>> viewUsersArticles
-            (@RequestParam(name = "userId", defaultValue = "") Long userId) {
-        return ResponseEntity.ok(articleService.findAllByUserId(userId));
     }
 }
