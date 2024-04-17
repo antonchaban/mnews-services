@@ -45,12 +45,9 @@ public class ArticleController {
         return ResponseEntity.ok(art);
     }
 
-//    @GetMapping("/articles")
-//    public ResponseEntity<List<Article>> viewArticles(@RequestParam(name = "searchCategory", defaultValue = "") String searchCategory,
-//                                                      @RequestParam(name = "searchWord", defaultValue = "") String searchWord,
-//                                                      @CookieValue(name = "language", defaultValue = "en") String language,
-//                                                      @RequestParam(name = "searchSource", defaultValue = "") String searchSource,
-//                                                      @RequestParam(name = "newsDate", defaultValue = "") String newsDate) {
-//        return ResponseEntity.ok(articleService.listArticles(searchWord, searchSource, language, newsDate, searchCategory));
-//    }
+    @GetMapping("/articles")
+    public ResponseEntity<List<Article>> viewUsersArticles
+            (@RequestParam(name = "userId", defaultValue = "") Long userId) {
+        return ResponseEntity.ok(articleService.findAllByUserId(userId));
+    }
 }
