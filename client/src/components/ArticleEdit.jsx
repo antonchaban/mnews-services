@@ -1,65 +1,135 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Container, Typography, TextField, Button } from '@mui/material';
+import { TextField, Button, Select, MenuItem } from '@mui/material';
 
 const ArticleEdit = () => {
     const { id } = useParams();
-    const [article, setArticle] = useState(null);
+    const navigate = useNavigate();
     const { t, i18n } = useTranslation();
+
+    const [article, setArticle] = useState({
+        id: '',
+        link: '',
+        source: '',
+        category: '',
+        title: '',
+        description: '',
+        language: ''
+    });
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedSource, setSelectedSource] = useState('');
+
+    const categories = t('articleList.allCategories', { returnObjects: true });
+    const sources = t('articleList.allSources', { returnObjects: true });
 
     useEffect(() => {
         axios.get(`http://localhost/api/articles/${id}`)
             .then(response => {
-                setArticle(response.data);
+                const fetchedArticle = response.data;
+                setArticle({
+                    ...fetchedArticle,
+                    title: i18n.language === 'en' ? fetchedArticle.title_en : fetchedArticle.title_ua,
+                    description: i18n.language === 'en' ? fetchedArticle.description_en : fetchedArticle.description_ua
+                });
+                setSelectedCategory(fetchedArticle.categories);
+                setSelectedSource(fetchedArticle.source);
             })
             .catch(error => {
-                console.error('Error fetching article:', error);
+                console.error('Error fetching article details:', error);
             });
-    }, [id]);
+    }, [id, i18n.language]);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setArticle(prevArticle => ({
-            ...prevArticle,
-            [name]: value
-        }));
+
+    const handleCategoryChange = (event) => {
+        setSelectedCategory(event.target.value);
     };
 
-    const handleSubmit = () => {
-        // Implement your submit logic here
+    const handleSourceChange = (event) => {
+        setSelectedSource(event.target.value);
     };
 
-    if (!article) {
-        return <Typography>Loading...</Typography>;
-    }
+    const handleUpdateArticle = () => {
+        const updatedArticle = {
+            id: article.id,
+            title: article.title,
+            description: article.description,
+            category: selectedCategory,
+            source: selectedSource,
+            language: i18n.language
+        };
+
+        axios.put(`http://localhost/api/articles/${id}`, updatedArticle)
+            .then(response => {
+                console.log('Article updated successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error updating article:', error);
+            });
+
+        console.log('PUT request sent to:', `http://localhost/api/articles/${id}`);
+    };
 
     return (
-        <Container>
-            <Typography variant="h2">{t('articleEdit.title')}</Typography>
+        <div>
+            <h2>{t('articleEdit.editArticle')}</h2>
             <TextField
-                name={i18n.language === 'en' ? 'title_en' : 'title_ua'}
-                label={t('articleEdit.title')}
-                value={article[i18n.language === 'en' ? 'title_en' : 'title_ua']}
-                onChange={handleChange}
+                label={t('articleEdit.link')}
+                value={article.link}
+                onChange={(e) => setArticle({ ...article, link: e.target.value })}
                 fullWidth
-                margin="normal"
+                margin="dense"
+                variant="outlined"
+            />
+            <Select
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+                fullWidth
+                margin="dense"
+                variant="outlined"
+            >
+                <MenuItem value="">{t('articleEdit.selectCategory')}</MenuItem>
+                {Object.keys(categories).map(categoryKey => (
+                    <MenuItem key={categoryKey} value={categoryKey}>{categories[categoryKey]}</MenuItem>
+                ))}
+            </Select>
+            <Select
+                value={selectedSource}
+                onChange={handleSourceChange}
+                fullWidth
+                margin="dense"
+                variant="outlined"
+            >
+                <MenuItem value="">{t('articleEdit.selectSource')}</MenuItem>
+                {Object.keys(sources).map(sourceKey => (
+                    <MenuItem key={sourceKey} value={sourceKey}>{sources[sourceKey]}</MenuItem>
+                ))}
+            </Select>
+
+            <TextField
+                label={t(`articleEdit.title.${i18n.language === 'en' ? 'title_en' : 'title_ua'}`)}
+                value={article.title}
+                onChange={(e) => setArticle({ ...article, title: e.target.value })}
+                fullWidth
+                margin="dense"
                 variant="outlined"
             />
             <TextField
-                name={i18n.language === 'en' ? 'description_en' : 'description_ua'}
-                label={t('articleEdit.description')}
-                value={article[i18n.language === 'en' ? 'description_en' : 'description_ua']}
-                onChange={handleChange}
+                label={t(`articleEdit.description.${i18n.language === 'en' ? 'description_en' : 'description_ua'}`)}
+                value={article.description}
+                onChange={(e) => setArticle({ ...article, description: e.target.value })}
                 fullWidth
+                margin="dense"
+                variant="outlined"
                 multiline
                 rows={4}
-                margin="normal"
-                variant="outlined"
             />
-            <Button onClick={handleSubmit} variant="contained" color="primary">{t('articleEdit.save')}</Button>
-        </Container>
+
+            <Button onClick={handleUpdateArticle} variant="contained" color="primary">
+                {t('articleEdit.update')}
+            </Button>
+        </div>
     );
 };
 
