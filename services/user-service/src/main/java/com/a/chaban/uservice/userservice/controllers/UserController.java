@@ -28,4 +28,9 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto user) throws NameAlreadyBoundException {
         return ResponseEntity.ok(userService.createUser(user));
     }
+
+    @GetMapping("users/{id}")
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.findUserById(id));
+    }
 }

@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserById(Long id) {
-        return userRepo.findUserById(id);
+    public UserDto findUserById(Long id) {
+        return userRepo.findById(id).map(mappingUtils::mapToUserDto).orElse(null);
     }
 
     public List<UserDto> findAll() {
