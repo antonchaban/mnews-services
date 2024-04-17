@@ -50,6 +50,6 @@ public class ArticleController {
     public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article) { // todo not tested
         var art = articleService.findById(id);
         art = articleService.save(article);
-        return ResponseEntity.ok(art);
+        return ResponseEntity.ok(art); // todo maybe need to add messaging between parsing-service and article-service
     }
 }

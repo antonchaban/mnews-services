@@ -21,6 +21,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+// todo IMPORTANT find out why there is dublicates of articles and fix it
+// TODO IMPORTANT handle exception when article parsing fails and it adds empty fields to the database
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ArticleRssParser implements Parser<ArrayList<Article>> {
