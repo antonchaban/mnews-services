@@ -73,7 +73,6 @@ const ArticleList = () => {
                     </div>
                 ))}
             </div>
-            {/* Implement modal logic here */}
             {selectedArticle && (
                 <div className="modal fade show" tabIndex="-1" role="dialog" style={{display: 'block'}}>
                     <div className="modal-dialog" role="document">

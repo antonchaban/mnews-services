@@ -1,13 +1,14 @@
 // App.jsx
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import ArticleList from './components/ArticleList';
 import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import {useCookies} from "react-cookie"; // Updated import
+import { useCookies } from "react-cookie"; // Updated import
 import Cookies from './enums/cookies';
 import SignUp from './components/SignUp';
+import Profile from "./components/Profile";
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -16,12 +17,10 @@ const App = () => {
 
     useEffect(() => {
         const accessToken = cookies[Cookies.ACCESS_TOKEN];
-        console.log(accessToken);
         if (accessToken) {
             setIsLoggedIn(true);
         }
     }, []);
-
 
     const handleLogin = (username) => {
         setIsLoggedIn(true);
@@ -29,9 +28,14 @@ const App = () => {
     };
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
-        setUsername('');
+        removeCookie(Cookies.USER_ID);
+        removeCookie(Cookies.ACCESS_TOKEN);
+        removeCookie(Cookies.REFRESH_TOKEN);
+
+        // Redirect to "/articles" after logout
+        return <Navigate to="/articles" replace />;
     };
+
 
     return (
         <Router>
@@ -49,6 +53,8 @@ const App = () => {
                         <Route path="/auth" element={<Login onLogin={handleLogin} />} />
 
                         <Route path="/signup" element={<SignUp />} />
+
+                        <Route path="/profile" element={<Profile />} />
                     </Routes>
                 </main>
                 <div className="text-right mt-3">
