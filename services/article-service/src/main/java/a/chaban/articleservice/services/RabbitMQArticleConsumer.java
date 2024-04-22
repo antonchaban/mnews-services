@@ -19,7 +19,7 @@ public class RabbitMQArticleConsumer {
 
     @RabbitListener(queues = {"${rabbitmq.article.queue.name}"})
     public void consume(Article article) {
-        Article existingArticle = articleRepo.findBytitle_en(article.getTitle_en());
+        Article existingArticle = articleRepo.findByTitle_en(article.getTitle_en());
         if (existingArticle == null) {
             User user = userRepo.findById(article.getUserId()).orElse(null);
             article.setUser(user);
