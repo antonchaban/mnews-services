@@ -13,16 +13,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class RabbitMQArticleConsumer {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQUserConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQArticleConsumer.class);
     private final ArticleRepo articleRepo;
     private final UserRepo userRepo;
 
     @RabbitListener(queues = {"${rabbitmq.article.queue.name}"})
     public void consume(Article article) {
-        User user = userRepo.findById(article.getUserId()).orElse(null);
-        article.setUser(user);
-        articleRepo.save(article);
-        LOGGER.info(String.format("Article received -> %s", article.toString()));
-//        LOGGER.info(String.format("User received -> %s", user.toString()));
+        Article existingArticle = articleRepo.findBytitle_en(article.getTitle_en());
+        if (existingArticle == null) {
+            User user = userRepo.findById(article.getUserId()).orElse(null);
+            article.setUser(user);
+            articleRepo.save(article);
+            LOGGER.info(String.format("New article received and saved -> %s", article.toString()));
+        } else {
+            LOGGER.info(String.format("Duplicate article received -> %s. Skipping saving.", article.toString()));
+        }
     }
 }
+

@@ -2,7 +2,7 @@ create table users
 (
     id       bigserial
         primary key,
-    password varchar(1000),
+    password varchar(2048),
     username varchar(255)
 );
 

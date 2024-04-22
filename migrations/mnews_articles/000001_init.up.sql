@@ -2,7 +2,7 @@ create table users
 (
     id       bigserial
         primary key,
-    password varchar(1000),
+    password varchar(2048),
     username varchar(255)
 );
 
@@ -12,12 +12,12 @@ create table articles
     id             bigserial
         primary key,
     article_date   timestamp(6),
-    description_en varchar(2048),
-    description_ua varchar(2048),
-    link           varchar(255),
-    source         varchar(255),
-    title_en       varchar(255),
-    title_ua       varchar(255),
+    description_en varchar(16384),
+    description_ua varchar(16384),
+    link           varchar(2048),
+    source         varchar(2048),
+    title_en       varchar(2048),
+    title_ua       varchar(2048),
     user_id        bigint
         constraint fklc3sm3utetrj1sx4v9ahwopnr
             references users

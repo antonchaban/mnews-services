@@ -32,14 +32,16 @@ public class Article {
 
     private String source;
 
+    @Column(length = 2048)
     private String title_ua;
 
-    @Column(length = 2048)
+    @Column(length = 16384)
     private String description_ua;
 
+    @Column(length = 2048)
     private String title_en;
 
-    @Column(length = 2048)
+    @Column(length = 16384)
     private String description_en;
 
     @ToString.Exclude

@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface ArticleRepo extends JpaRepository<Article, Long> {
     List<Article> findAllByUser(User user);
+
+    Article findBytitle_en(String titleEn);
 }
