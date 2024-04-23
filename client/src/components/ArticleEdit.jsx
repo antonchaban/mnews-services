@@ -6,7 +6,7 @@ import { TextField, Button, Select, MenuItem } from '@mui/material';
 
 const ArticleEdit = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
+    useNavigate();
     const { t, i18n } = useTranslation();
 
     const [article, setArticle] = useState({
@@ -50,6 +50,18 @@ const ArticleEdit = () => {
         setSelectedSource(event.target.value);
     };
 
+    const handleTitleChange = (e) => {
+        console.log('New title:', e.target.value);
+        setArticle(prevState => ({ ...prevState, title: e.target.value }));
+    };
+
+    const handleDescriptionChange = (e) => {
+        console.log('New description:', e.target.value);
+        setArticle(prevState => ({ ...prevState, description: e.target.value }));
+    };
+
+
+
     const handleUpdateArticle = () => {
         const updatedArticle = {
             id: article.id,
@@ -59,6 +71,8 @@ const ArticleEdit = () => {
             source: selectedSource,
             language: i18n.language
         };
+
+        console.log('Updated Article:', updatedArticle);
 
         axios.put(`http://localhost/api/articles/${id}`, updatedArticle)
             .then(response => {
@@ -70,6 +84,7 @@ const ArticleEdit = () => {
 
         console.log('PUT request sent to:', `http://localhost/api/articles/${id}`);
     };
+
 
     return (
         <div>
@@ -110,21 +125,23 @@ const ArticleEdit = () => {
             <TextField
                 label={t(`articleEdit.title.${i18n.language === 'en' ? 'title_en' : 'title_ua'}`)}
                 value={article.title}
-                onChange={(e) => setArticle({ ...article, title: e.target.value })}
+                onChange={handleTitleChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
             />
+
             <TextField
                 label={t(`articleEdit.description.${i18n.language === 'en' ? 'description_en' : 'description_ua'}`)}
                 value={article.description}
-                onChange={(e) => setArticle({ ...article, description: e.target.value })}
+                onChange={handleDescriptionChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
                 multiline
                 rows={4}
             />
+
 
             <Button onClick={handleUpdateArticle} variant="contained" color="primary">
                 {t('articleEdit.update')}
