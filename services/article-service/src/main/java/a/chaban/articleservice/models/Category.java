@@ -43,4 +43,6 @@ public enum Category {
     FIFTY,
     ARTS,
     DIVORCE
+
+//    todo add UNKNOWN
 }
