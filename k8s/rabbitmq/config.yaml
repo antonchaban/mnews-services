@@ -46,27 +46,3 @@ stringData:
   password: Vc-d8LWI_yQJFOK23p0PZAbpItXFcbl6
   username: mdmbd771i3zftBt44Ed97lBWVcyqmnlL
 type: Opaque
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: rabbitmq-service
-# spec:
-#   selector:
-#     app: rabbitmq
-#   ports:
-#     - protocol: TCP
-#       port: 5672
-#       targetPort: 5672
----
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: rabbitmq-management
-# spec:
-#   selector:
-#     app: rabbitmq
-#   ports:
-#     - protocol: TCP
-#       port: 15672
-#       targetPort: 15672
