@@ -55,7 +55,10 @@ public class ArticleController {
     public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article,
                                                  @CookieValue(name = "USER_ID") Long userId) { // todo not tested
         var articleFromDb = articleService.findById(id);
-        if (!Objects.equals(articleFromDb.getUserId(), userId)) {
+        if (!Objects.equals(articleFromDb.getUser().getId(), userId)) {
+            System.out.println("User id is not equal to article user id");
+            System.out.println("User id: " + userId);
+            System.out.println("Article user id: " + articleFromDb.getUserId());
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(articleService.updateArticle(article));
