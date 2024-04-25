@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -42,14 +43,21 @@ public class ArticleController {
     }
 
     @PostMapping("articles")
-    public ResponseEntity<Article> createArticle(@RequestBody ArticleCreateDTO article) {
-        return ResponseEntity.ok(articleService.save(article)); // todo not tested
+    public ResponseEntity<Article> createArticle(@RequestBody ArticleCreateDTO article,
+                                                 @CookieValue(name = "USER_ID") Long userId) {
+        if (userId == null || userId <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(articleService.createArticle(article, userId)); // todo not tested
     }
 
     @PutMapping("articles/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article) { // todo not tested
-        var art = articleService.findById(id);
-        art = articleService.save(article);
-        return ResponseEntity.ok(art); // todo maybe need to add messaging between parsing-service and article-service
+    public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article,
+                                                 @CookieValue(name = "USER_ID") Long userId) { // todo not tested
+        var articleFromDb = articleService.findById(id);
+        if (!Objects.equals(articleFromDb.getUserId(), userId)) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(articleService.updateArticle(article));
     }
 }
