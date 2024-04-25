@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TextField, Button, Select, MenuItem } from '@mui/material';
 
+// todo send link in PUT request
 const ArticleEdit = () => {
     const { id } = useParams();
     useNavigate();
