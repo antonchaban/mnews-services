@@ -71,6 +71,36 @@ public class RabbitMQConfig {
                 .with(articleRoutingKey);
     }
 
+    // Parsing config
+
+    @Value("${rabbitmq.parsing.queue.name}")
+    private String parsingQueueName;
+
+    @Value("${rabbitmq.parsing.exchange.name}")
+    private String parsingExchangeName;
+
+    @Value("${rabbitmq.parsing.routing.key.name}")
+    private String parsingRoutingKey;
+
+    @Bean
+    public Queue parsingQueue() {
+        return new Queue(parsingQueueName);
+    }
+
+    @Bean
+    public TopicExchange parsingExchange() {
+        return new TopicExchange(parsingExchangeName);
+    }
+
+    @Bean
+    public Binding parsingBinding() {
+        return BindingBuilder
+                .bind(parsingQueue())
+                .to(parsingExchange())
+                .with(parsingRoutingKey);
+    }
+
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
@@ -82,4 +112,6 @@ public class RabbitMQConfig {
         rabbitTemplate.setMessageConverter(jsonMessageConverter());
         return rabbitTemplate;
     }
+
+
 }

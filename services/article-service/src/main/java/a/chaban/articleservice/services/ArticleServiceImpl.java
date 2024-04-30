@@ -2,6 +2,7 @@ package a.chaban.articleservice.services;
 
 import a.chaban.articleservice.dtos.ArticleCreateDTO;
 import a.chaban.articleservice.dtos.ArticleEditDTO;
+import a.chaban.articleservice.dtos.ArticleSendDTO;
 import a.chaban.articleservice.models.Article;
 import a.chaban.articleservice.models.Category;
 import a.chaban.articleservice.repositories.ArticleRepo;
@@ -19,6 +20,7 @@ public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepo articleRepo;
     private final UserRepo userRepo;
 
+    private final RabbitMQArticleProducer rabbitMQArticleProducer;
 
     @Override
     public Article findById(long artId) {
@@ -36,15 +38,22 @@ public class ArticleServiceImpl implements ArticleService {
 
     private void convertFromDTO(Article newArticle, String language, String title, String description,
                                 String link, String source, String category) {
+        var articleToSend = new ArticleSendDTO();
         switch (language) {
             case "en":
                 newArticle.setTitle_en(title);
                 newArticle.setDescription_en(description);
+                articleToSend.setArticle(newArticle);
+                articleToSend.setLanguage("en");
+                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
                 // todo auto translate
                 break;
             case "ua":
                 newArticle.setTitle_ua(title);
                 newArticle.setDescription_ua(description);
+                articleToSend.setArticle(newArticle);
+                articleToSend.setLanguage("ua");
+                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
                 // todo auto translate
                 break;
         }
