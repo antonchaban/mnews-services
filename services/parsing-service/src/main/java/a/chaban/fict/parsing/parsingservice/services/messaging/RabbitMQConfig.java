@@ -71,6 +71,35 @@ public class RabbitMQConfig {
     }
 
 
+    // Sending translated articles created by users to article service
+
+    @Value("${rabbitmq.article-crud.queue.name}")
+    private String articleCrudQueueName;
+
+    @Value("${rabbitmq.article-crud.exchange.name}")
+    private String articleCrudExchangeName;
+
+    @Value("${rabbitmq.article-crud.routing.key.name}")
+    private String articleCrudRoutingKey;
+
+    @Bean
+    public Queue articleCrudQueue() {
+        return new Queue(articleCrudQueueName);
+    }
+
+    @Bean
+    public TopicExchange articleCrudExchange() {
+        return new TopicExchange(articleCrudExchangeName);
+    }
+
+    @Bean
+    public Binding articleCrudBinding() {
+        return BindingBuilder
+                .bind(articleCrudQueue())
+                .to(articleCrudExchange())
+                .with(articleCrudRoutingKey);
+    }
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

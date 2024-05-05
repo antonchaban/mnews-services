@@ -16,6 +16,7 @@ import java.io.IOException;
 public class RabbitMQArticleConsumer {
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQArticleConsumer.class);
     private final TranslateAPIParser translateAPIParser;
+    private final RabbitMQArticleProducer rabbitMQArticleProducer;
 
     @RabbitListener(queues = {"${rabbitmq.article.queue.name}"})
     public void consume(ArticleSendDTO articleSendDTO) throws IOException, ParseException { // todo send to article service
@@ -28,6 +29,7 @@ public class RabbitMQArticleConsumer {
                                 .doParse(articleSendDTO.getArticle().getTitle_en(), "en", "ua"));
                 articleSendDTO.getArticle().setDescription_ua(translateAPIParser
                         .doParse(articleSendDTO.getArticle().getDescription_en(), "en", "ua"));
+                rabbitMQArticleProducer.sendTranslatedArticle(articleSendDTO.getArticle());
                 break;
             case "ua":
                 LOGGER.info("Article is in Ukrainian. Translating to English.");
@@ -36,6 +38,7 @@ public class RabbitMQArticleConsumer {
                                 .doParse(articleSendDTO.getArticle().getTitle_ua(), "ua", "en"));
                 articleSendDTO.getArticle().setDescription_en(translateAPIParser
                         .doParse(articleSendDTO.getArticle().getDescription_ua(), "ua", "en"));
+                rabbitMQArticleProducer.sendTranslatedArticle(articleSendDTO.getArticle());
                 break;
         }
     }

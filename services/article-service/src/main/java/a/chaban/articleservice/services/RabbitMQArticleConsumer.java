@@ -29,5 +29,17 @@ public class RabbitMQArticleConsumer {
             LOGGER.info(String.format("Duplicate article received -> %s. Skipping saving.", article.toString()));
         }
     }
+
+    @RabbitListener(queues = {"${rabbitmq.article-crud.queue.name}"})
+    public void consumeTranslatedArticle(Article article) {
+        articleRepo.findById(article.getId()).ifPresent(existingArticle -> {
+            existingArticle.setTitle_ua(article.getTitle_ua());
+            existingArticle.setDescription_ua(article.getDescription_ua());
+            existingArticle.setDescription_en(article.getDescription_en());
+            existingArticle.setTitle_en(article.getTitle_en());
+            articleRepo.save(existingArticle);
+            LOGGER.info(String.format("Translated article received and saved -> %s", existingArticle.toString()));
+        });
+    }
 }
 
