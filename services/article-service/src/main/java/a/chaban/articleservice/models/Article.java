@@ -59,6 +59,6 @@ public class Article {
 
 
     @Transient
-    @ToString.Exclude
+//    @ToString.Exclude
     private Long userId;
 }

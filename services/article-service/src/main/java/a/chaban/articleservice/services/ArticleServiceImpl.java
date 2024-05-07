@@ -8,6 +8,8 @@ import a.chaban.articleservice.models.Category;
 import a.chaban.articleservice.repositories.ArticleRepo;
 import a.chaban.articleservice.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -21,39 +23,49 @@ public class ArticleServiceImpl implements ArticleService {
     private final UserRepo userRepo;
 
     private final RabbitMQArticleProducer rabbitMQArticleProducer;
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQArticleProducer.class);
     @Override
     public Article findById(long artId) {
         return articleRepo.findById(artId).orElse(null);
     }
 
-    public Article createArticle(ArticleCreateDTO article, Long userId) { // todo check why date not saved https://prnt.sc/V8FvVq3UTmxS
+    public Article createArticle(ArticleCreateDTO article, Long userId) {
         var newArticle = new Article();
         convertFromDTO(newArticle, article.getLanguage(), article.getTitle(), article.getDescription(),
                 article.getLink(), article.getSource(), article.getCategory());
         newArticle.setArticleDate(Date.from(Instant.now()));
         newArticle.setUser(userRepo.findById(userId).orElse(null));
-        return articleRepo.save(newArticle);
+        newArticle = articleRepo.save(newArticle);
+        LOGGER.info(String.format("New article in createArticle() -> %s", newArticle.toString()));
+        sendToTranslate(newArticle, article.getLanguage());
+        return newArticle;
+    }
+
+    private void sendToTranslate(Article article, String language) {
+        var articleToSend = new ArticleSendDTO();
+        articleToSend.setArticle(article);
+        articleToSend.setLanguage(language);
+        rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
     }
 
     private void convertFromDTO(Article newArticle, String language, String title, String description,
                                 String link, String source, String category) {
-        var articleToSend = new ArticleSendDTO();
+
         switch (language) {
             case "en":
                 newArticle.setTitle_en(title);
                 newArticle.setDescription_en(description);
-                articleToSend.setArticle(newArticle);
-                articleToSend.setLanguage("en");
-                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
+
+//                articleToSend.setLanguage("en");
+//                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
                 // todo auto translate
                 break;
             case "ua":
                 newArticle.setTitle_ua(title);
                 newArticle.setDescription_ua(description);
-                articleToSend.setArticle(newArticle);
-                articleToSend.setLanguage("ua");
-                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
+//                articleToSend.setArticle(newArticle);
+//                articleToSend.setLanguage("ua");
+//                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
                 // todo auto translate
                 break;
         }
@@ -91,6 +103,8 @@ public class ArticleServiceImpl implements ArticleService {
         convertFromDTO(article, articleEditDTO.getLanguage(), articleEditDTO.getTitle(),
                 articleEditDTO.getDescription(), articleEditDTO.getLink(), articleEditDTO.getSource(),
                 articleEditDTO.getCategory());
-        return articleRepo.save(article);
+        article = articleRepo.save(article);
+        sendToTranslate(article, articleEditDTO.getLanguage());
+        return article;
     }
 }

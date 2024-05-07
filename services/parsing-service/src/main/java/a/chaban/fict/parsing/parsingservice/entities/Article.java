@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Data
 public class Article {
+    private Long id; // ?
     private String link;
     private Date articleDate;
     private String source;
