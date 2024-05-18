@@ -80,7 +80,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>a.chaban.article.ArticleServiceApplication</mainClass>
+                    <mainClass>a.chaban.articleservice.ArticleServiceApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>

@@ -10,21 +10,33 @@
 #
 #CMD ["./mvnw", "spring-boot:run"]
 # (1)
-FROM alpine:latest AS build
-ENV JAVA_HOME /opt/jdk/jdk-21.0.1+12
-ENV PATH $JAVA_HOME/bin:$PATH
+# Stage 1: Build stage
+FROM eclipse-temurin:21-jdk-alpine as builder
 
-ADD https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.1%2B12/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.1_12.tar.gz /opt/jdk/
-RUN tar -xzvf /opt/jdk/OpenJDK21U-jdk_x64_alpine-linux_hotspot_21.0.1_12.tar.gz -C /opt/jdk/
-RUN ["jlink", "--compress=2", \
-     "--module-path", "/opt/jdk/jdk-21.0.1+12/jmods/", \
-     "--add-modules", "java.base,java.logging,java.naming,java.desktop,jdk.unsupported", \
-     "--no-header-files", "--no-man-pages", \
-     "--output", "/springboot-runtime"]
+# Set the working directory inside the container
+WORKDIR /app
 
-FROM alpine:latest
-COPY --from=build  /springboot-runtime /opt/jdk
-ENV PATH=$PATH:/opt/jdk/bin
+# Copy the build files
+COPY pom.xml ./
+COPY src ./src
+
+# Install Maven
+RUN apk add --no-cache maven
+
+# Build the application
+RUN mvn clean package -DskipTests
+
+# Stage 2: Runtime stage
+FROM eclipse-temurin:21-jre-alpine
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the JAR file from the build stage
+COPY --from=builder /app/target/*.jar app.jar
+
+# Expose the port the application runs on
 EXPOSE 8080
-COPY ../target/article-service-0.0.1-SNAPSHOT.jar /opt/app/
-CMD ["java", "-showversion", "-jar", "/opt/app/article-service-0.0.1-SNAPSHOT.jar"]
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]

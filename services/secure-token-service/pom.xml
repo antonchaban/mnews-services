@@ -8,7 +8,7 @@
         <version>2.7.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.alex.dudchenko</groupId>
+    <groupId>com.a.chaban</groupId>
     <artifactId>secure-token-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>STS</name>
@@ -69,6 +69,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <mainClass>com.a.chaban.sts.StsApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
