@@ -4,10 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { TextField, Button, Select, MenuItem } from '@mui/material';
 
-// todo send link in PUT request
 const ArticleEdit = () => {
     const { id } = useParams();
-    useNavigate();
+    const navigate = useNavigate();
     const { t, i18n } = useTranslation();
 
     const [article, setArticle] = useState({
@@ -34,14 +33,13 @@ const ArticleEdit = () => {
                     title: i18n.language === 'en' ? fetchedArticle.title_en : fetchedArticle.title_ua,
                     description: i18n.language === 'en' ? fetchedArticle.description_en : fetchedArticle.description_ua
                 });
-                setSelectedCategory(fetchedArticle.categories);
+                setSelectedCategory(fetchedArticle.category);
                 setSelectedSource(fetchedArticle.source);
             })
             .catch(error => {
                 console.error('Error fetching article details:', error);
             });
     }, [id, i18n.language]);
-
 
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
@@ -52,28 +50,27 @@ const ArticleEdit = () => {
     };
 
     const handleTitleChange = (e) => {
-        console.log('New title:', e.target.value);
         setArticle(prevState => ({ ...prevState, title: e.target.value }));
     };
 
     const handleDescriptionChange = (e) => {
-        console.log('New description:', e.target.value);
         setArticle(prevState => ({ ...prevState, description: e.target.value }));
     };
 
-
+    const handleLinkChange = (e) => {
+        setArticle(prevState => ({ ...prevState, link: e.target.value }));
+    };
 
     const handleUpdateArticle = () => {
         const updatedArticle = {
             id: article.id,
+            link: article.link,
             title: article.title,
             description: article.description,
             category: selectedCategory,
             source: selectedSource,
             language: i18n.language
         };
-
-        console.log('Updated Article:', updatedArticle);
 
         axios.put(`http://localhost/api/articles/${id}`, updatedArticle)
             .then(response => {
@@ -82,10 +79,7 @@ const ArticleEdit = () => {
             .catch(error => {
                 console.error('Error updating article:', error);
             });
-
-        console.log('PUT request sent to:', `http://localhost/api/articles/${id}`);
     };
-
 
     return (
         <div>
@@ -93,7 +87,7 @@ const ArticleEdit = () => {
             <TextField
                 label={t('articleEdit.link')}
                 value={article.link}
-                onChange={(e) => setArticle({ ...article, link: e.target.value })}
+                onChange={handleLinkChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
@@ -142,7 +136,6 @@ const ArticleEdit = () => {
                 multiline
                 rows={4}
             />
-
 
             <Button onClick={handleUpdateArticle} variant="contained" color="primary">
                 {t('articleEdit.update')}
