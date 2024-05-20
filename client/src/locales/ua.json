@@ -59,5 +59,20 @@
     "Українська правда": "Українська правда",
     "FOX NEWS": "FOX",
     "Other users": "Від інших користувачів"
+  },
+  "articleCreate": {
+    "createArticle": "Створити статтю",
+    "link": "Посилання",
+    "selectCategory": "Вибрати категорію",
+    "selectSource": "Вибрати джерело",
+    "title": {
+      "title_en": "Назва (АН)",
+      "title_ua": "Назва (УА)"
+    },
+    "description": {
+      "description_en": "Опис (АН)",
+      "description_ua": "Опис (УА)"
+    },
+    "create": "Створити"
   }
 }

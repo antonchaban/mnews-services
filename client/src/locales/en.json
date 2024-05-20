@@ -58,5 +58,20 @@
     "Українська правда": "UP",
     "FOX NEWS": "FOX",
     "Other users": "Other users"
+  },
+  "articleCreate": {
+    "createArticle": "Create Article",
+    "link": "Link",
+    "selectCategory": "Select Category",
+    "selectSource": "Select Source",
+    "title": {
+      "title_en": "Title (EN)",
+      "title_ua": "Title (UA)"
+    },
+    "description": {
+      "description_en": "Description (EN)",
+      "description_ua": "Description (UA)"
+    },
+    "create": "Create"
   }
 }

@@ -10,6 +10,7 @@ import Cookies from './enums/cookies';
 import SignUp from './components/SignUp';
 import Profile from "./components/Profile";
 import ArticleEdit from "./components/ArticleEdit";
+import ArticleCreate from "./components/ArticleCreate"; // Import ArticleCreate component
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -35,9 +36,8 @@ const App = () => {
 
         // Redirect to "/articles" after logout
         return <Navigate to="/articles" replace />;
-    //     todo after logout button logout still visible
+        //     todo after logout button logout still visible
     };
-
 
     return (
         <Router>
@@ -59,6 +59,9 @@ const App = () => {
                         <Route path="/profile" element={<Profile />} />
 
                         <Route path="/articles/:id/edit" element={<ArticleEdit />} />
+
+                        {/* Route to display the ArticleCreate component */}
+                        <Route path="/articles/create" element={<ArticleCreate />} />
                     </Routes>
                 </main>
                 <div className="text-right mt-3">
