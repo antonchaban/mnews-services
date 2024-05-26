@@ -20,4 +20,10 @@ public class RabbitMQUserConsumer {
         userRepo.save(user);
         LOGGER.info(String.format("User received -> %s", user.toString()));
     }
+
+    @RabbitListener(queues = {"${rabbitmq.user.queue.name}"})
+    public void consumeDelete(Long id) {
+        userRepo.deleteById(id);
+        LOGGER.info(String.format("User deleted -> %s", id));
+    }
 }

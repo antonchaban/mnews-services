@@ -1,6 +1,7 @@
 package com.a.chaban.uservice.userservice.services;
 
 import com.a.chaban.uservice.userservice.dtos.CreateUserDto;
+import com.a.chaban.uservice.userservice.dtos.UpdateUserDto;
 import com.a.chaban.uservice.userservice.dtos.UserDto;
 import com.a.chaban.uservice.userservice.models.Role;
 import com.a.chaban.uservice.userservice.models.User;
@@ -47,5 +48,22 @@ public class UserServiceImpl implements UserService {
         userRepo.save(userEntity);
         producer.sendUserEntity(userEntity);
         return userEntity;
+    }
+
+    public UserDto updateUser(Long id, UpdateUserDto user) {
+        var userEntity = userRepo.findById(id).orElse(null);
+        if (userEntity == null) {
+            return null;
+        }
+        userEntity.getRoles().clear();
+        userEntity.getRoles().addAll(user.getRole());
+        userRepo.save(userEntity);
+        producer.sendUserEntity(userEntity);
+        return mappingUtils.mapToUserDto(userEntity);
+    }
+
+    public void deleteUser(Long id) {
+        userRepo.deleteById(id);
+        producer.sendDeleteUser(id);
     }
 }

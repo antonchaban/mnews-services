@@ -26,4 +26,9 @@ public class RabbitMQUserProducer {
         LOGGER.info(String.format("Sending json message: %s", user));
         rabbitTemplate.convertAndSend(exchangeName, jsonRoutingKey, user);
     }
+
+    public void sendDeleteUser(Long id) {
+        LOGGER.info(String.format("Sending json message: %s", id));
+        rabbitTemplate.convertAndSend(exchangeName, jsonRoutingKey, id);
+    }
 }
