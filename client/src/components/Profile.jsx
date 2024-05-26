@@ -49,11 +49,24 @@ const Profile = () => {
         return <Typography>Loading...</Typography>;
     }
 
+    const isAdmin = user.roles.includes('ROLE_ADMIN');
+
     return (
         <Container>
-            <Typography variant="h2">Profile</Typography>
-            <Typography variant="h4">User: {user.username}</Typography>
-            <Typography variant="h5">Articles:</Typography>
+            <Typography variant="h2">{t('profile.title')}</Typography>
+            <Typography variant="h4">{t('profile.user')}: {user.username}</Typography>
+            {isAdmin && (
+                <Button
+                    component={Link}
+                    to="/admin"
+                    variant="contained"
+                    color="primary"
+                    style={{ marginBottom: '20px' }}
+                >
+                    Admin Panel
+                </Button>
+            )}
+            <Typography variant="h5">{t('profile.articles')}:</Typography>
             <List>
                 {articles.map(article => (
                     <ListItem key={article.id}>
@@ -61,8 +74,8 @@ const Profile = () => {
                             primary={i18n.language === 'en' ? article.title_en : article.title_ua}
                             secondary={i18n.language === 'en' ? article.description_en : article.description_ua}
                         />
-                        <Button onClick={() => handleDelete(article.id)}>Delete</Button>
-                        <Button component={Link} to={`/articles/${article.id}/edit`}>Edit</Button>
+                        <Button onClick={() => handleDelete(article.id)}>{t('profile.delete')}</Button>
+                        <Button component={Link} to={`/articles/${article.id}/edit`}>{t('profile.edit')}</Button>
                     </ListItem>
                 ))}
             </List>

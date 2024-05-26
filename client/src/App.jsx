@@ -11,6 +11,7 @@ import SignUp from './components/SignUp';
 import Profile from "./components/Profile";
 import ArticleEdit from "./components/ArticleEdit";
 import ArticleCreate from "./components/ArticleCreate"; // Import ArticleCreate component
+import AdminComponent from "./components/AdminComponent";
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -62,6 +63,7 @@ const App = () => {
 
                         {/* Route to display the ArticleCreate component */}
                         <Route path="/articles/create" element={<ArticleCreate />} />
+                        <Route path="/admin" element={<AdminComponent />} />
                     </Routes>
                 </main>
                 <div className="text-right mt-3">
