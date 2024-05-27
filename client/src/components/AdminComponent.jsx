@@ -114,7 +114,7 @@ const AdminComponent = () => {
                                     <Button
                                         variant="contained"
                                         component={Link}
-                                        to={`/users/${user.id}`}
+                                        to={`/profile/${user.id}`}
                                     >
                                         View more
                                     </Button>

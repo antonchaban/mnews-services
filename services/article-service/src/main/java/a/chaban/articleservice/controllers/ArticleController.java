@@ -4,6 +4,8 @@ package a.chaban.articleservice.controllers;
 import a.chaban.articleservice.dtos.ArticleCreateDTO;
 import a.chaban.articleservice.dtos.ArticleEditDTO;
 import a.chaban.articleservice.models.Article;
+import a.chaban.articleservice.models.Role;
+import a.chaban.articleservice.repositories.UserRepo;
 import a.chaban.articleservice.services.ArticleServiceImpl;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class ArticleController {
     private final ArticleServiceImpl articleService;
+    private final UserRepo userRepo;
 
     @GetMapping("/articles")
     public ResponseEntity<List<Article>> getArticles(
@@ -37,9 +40,14 @@ public class ArticleController {
     }
 
     @DeleteMapping("articles/{id}")
-    public ResponseEntity<Void> deleteArticleById(@PathVariable long id) {
-        articleService.deleteById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Void> deleteArticleById(@PathVariable long id, @CookieValue(name = "USER_ID") Long userId) {
+        var article = articleService.findById(id);
+        if (isUserAdmin(userId) || Objects.equals(article.getUserId(), userId)) {
+            articleService.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(403).build();
+        }
     }
 
     @PostMapping("articles")
@@ -55,12 +63,21 @@ public class ArticleController {
     public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article,
                                                  @CookieValue(name = "USER_ID") Long userId) { // todo not tested
         var articleFromDb = articleService.findById(id);
-        if (!Objects.equals(articleFromDb.getUser().getId(), userId)) {
+        if (isUserAdmin(userId) || Objects.equals(articleFromDb.getUserId(), userId)) {
+            return ResponseEntity.ok(articleService.updateArticle(article));
+
+        } else {
             System.out.println("User id is not equal to article user id");
             System.out.println("User id: " + userId);
             System.out.println("Article user id: " + articleFromDb.getUserId());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(403).build();
         }
-        return ResponseEntity.ok(articleService.updateArticle(article));
+
+    }
+
+    private boolean isUserAdmin(Long userId) {
+        var user = userRepo.findById(userId).orElse(null);
+        assert user != null;
+        return user.getRoles().stream().anyMatch(role -> role.equals(Role.ROLE_ADMIN));
     }
 }

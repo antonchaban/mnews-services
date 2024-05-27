@@ -1,7 +1,8 @@
 package a.chaban.articleservice.models;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -51,10 +52,11 @@ public class Article {
     @Enumerated(EnumType.STRING)
     private Set<Category> categories = new HashSet<>();
 
-    @ToString.Exclude
+
     @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn
-    @JsonIgnore
+    @JsonIgnoreProperties("articles")
+    @ToString.Exclude
     private User user;
 
 

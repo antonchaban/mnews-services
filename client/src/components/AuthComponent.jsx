@@ -8,6 +8,7 @@ const AuthComponent = () => {
     const token = cookies['ACCESS_TOKEN'];
     let isLoggedIn = false;
     let username = '';
+    const userId = cookies['USER_ID'];
 
     if (token) {
         const decodedToken = jwtDecode(token); // Use jwtDecode instead of jwt_decode
@@ -19,7 +20,7 @@ const AuthComponent = () => {
         return (
             <div>
                 <p>Welcome, {username}!</p>
-                <p><Link to="/profile">Profile</Link></p>
+                <p><Link to={`/profile/${userId}`}>Profile</Link></p>
             </div>
         );
     } else {

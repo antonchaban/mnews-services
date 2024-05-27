@@ -55,18 +55,10 @@ public class ArticleServiceImpl implements ArticleService {
             case "en":
                 newArticle.setTitle_en(title);
                 newArticle.setDescription_en(description);
-
-//                articleToSend.setLanguage("en");
-//                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
-                // todo auto translate
                 break;
             case "ua":
                 newArticle.setTitle_ua(title);
                 newArticle.setDescription_ua(description);
-//                articleToSend.setArticle(newArticle);
-//                articleToSend.setLanguage("ua");
-//                rabbitMQArticleProducer.sendArticleEntityToTranslate(articleToSend);
-                // todo auto translate
                 break;
         }
         newArticle.setLink(link);

@@ -57,7 +57,7 @@ const Login = () => {
 
     useEffect(() => {
         if (loggedIn) {
-            navigate('/profile'); // Change the route accordingly
+            navigate('/articles'); // Change the route accordingly
         }
     }, [loggedIn, navigate]);
 

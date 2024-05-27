@@ -1,11 +1,11 @@
 package a.chaban.articleservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.HashSet;
 import java.util.List;
@@ -35,7 +35,6 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     @ToString.Exclude
-    @JsonIgnore
     private List<Article> articles;
 }
 
