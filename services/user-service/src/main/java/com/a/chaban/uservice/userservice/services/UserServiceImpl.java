@@ -8,8 +8,9 @@ import com.a.chaban.uservice.userservice.models.User;
 import com.a.chaban.uservice.userservice.repositories.UserRepo;
 import com.a.chaban.uservice.userservice.utils.MappingUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import javax.naming.NameAlreadyBoundException;
 import java.util.List;
 
@@ -33,10 +34,12 @@ public class UserServiceImpl implements UserService {
         return userRepo.findById(id).map(mappingUtils::mapToUserDto).orElse(null);
     }
 
+    @Override
     public List<UserDto> findAll() {
         return userRepo.findAll().stream().map(mappingUtils::mapToUserDto).toList();
     }
 
+    @Override
     public User createUser(CreateUserDto user) throws NameAlreadyBoundException {
         if (userRepo.findByUsername(user.getUsername()) != null) {
             throw new NameAlreadyBoundException("Username already taken");
@@ -50,6 +53,8 @@ public class UserServiceImpl implements UserService {
         return userEntity;
     }
 
+
+    @Override
     public UserDto updateUser(Long id, UpdateUserDto user) {
         var userEntity = userRepo.findById(id).orElse(null);
         if (userEntity == null) {
@@ -62,6 +67,7 @@ public class UserServiceImpl implements UserService {
         return mappingUtils.mapToUserDto(userEntity);
     }
 
+    @Override
     public void deleteUser(Long id) {
         userRepo.deleteById(id);
         producer.sendDeleteUser(id);

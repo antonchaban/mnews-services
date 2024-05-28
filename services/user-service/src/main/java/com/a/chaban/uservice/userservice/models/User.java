@@ -1,12 +1,12 @@
 package com.a.chaban.uservice.userservice.models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import net.minidev.json.annotate.JsonIgnore;
 
-import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 

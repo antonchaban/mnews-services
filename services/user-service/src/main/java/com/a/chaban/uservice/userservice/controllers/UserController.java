@@ -28,7 +28,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @PostMapping("users") //
+    @PostMapping("users")
     public ResponseEntity<User> createUser(@RequestBody CreateUserDto user) throws NameAlreadyBoundException {
         return ResponseEntity.ok(userService.createUser(user));
     }
