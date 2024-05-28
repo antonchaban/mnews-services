@@ -28,16 +28,14 @@ const Header = ({isLoggedIn}) => {
                     <img src="https://tse2.mm.bing.net/th/id/OIG3.0vMky7KhhRNgzUUg1OYO?pid=ImgGn" alt="Multi News Logo"
                          style={{width: '100px', marginRight: '20px'}}/>
                 </Link>
-                <LanguageSwitcher/> {/* Language switcher component */}
+                <LanguageSwitcher/>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto">
-                        {/* Render AuthComponent only if not on the login page */}
                         {!isLoginPage && (
                             <li className="nav-item">
                                 <AuthComponent isLoggedIn={isLoggedIn}/>
                             </li>
                         )}
-                        {/* Render Create Article button only if the user is logged in */}
                         {isLoggedIn && (
                             <li className="nav-item">
                                 <Link to="/articles/create" className="btn btn-outline-light">
@@ -45,7 +43,6 @@ const Header = ({isLoggedIn}) => {
                                 </Link>
                             </li>
                         )}
-                        {/* Render Profile link */}
                         {isLoggedIn && (
                             <li className="nav-item">
                                 <Link to={`/profile/${userId}`} className="btn btn-outline-light">
@@ -53,7 +50,6 @@ const Header = ({isLoggedIn}) => {
                                 </Link>
                             </li>
                         )}
-                        {/* Render Logout button */}
                         {isLoggedIn && (
                             <li className="nav-item">
                                 <Button onClick={handleLogout} variant="contained" color="secondary">
@@ -61,7 +57,6 @@ const Header = ({isLoggedIn}) => {
                                 </Button>
                             </li>
                         )}
-                        {/* Render Login button */}
                         {!isLoggedIn && (
                             <li className="nav-item">
                                 <Link to="/auth" className="btn btn-outline-light">

@@ -1,21 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios'; // Assuming axios is imported from 'axios' package
-import {useCookies} from 'react-cookie'; // Assuming useCookies is imported from 'react-cookie' package
-import {Avatar, Box, Button, Container, Grid, Link, TextField, Typography} from '@mui/material'; // Assuming MUI components are used
+import axios from 'axios';
+import {useCookies} from 'react-cookie';
+import {Avatar, Box, Button, Container, Grid, Link, TextField, Typography} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
     const [cookies, setCookie, removeCookie] = useCookies();
     const [loggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     const accessToken = cookies[Cookies.ACCESS_TOKEN]
-    //     if (accessToken) {
-    //         setLoggedIn(true);
-    //     }
-    // }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -30,7 +23,7 @@ const Login = () => {
                 password
             };
 
-            const res = await axios.post('http://localhost/login', user); // Change the endpoint accordingly
+            const res = await axios.post('http://localhost/login', user);
 
             if (res.status === 200) {
                 const login = res.data;
@@ -57,7 +50,7 @@ const Login = () => {
 
     useEffect(() => {
         if (loggedIn) {
-            navigate('/articles'); // Change the route accordingly
+            navigate('/articles');
         }
     }, [loggedIn, navigate]);
 

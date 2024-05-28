@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import axios from 'axios'; // Assuming axios is imported from 'axios' package
-import {Avatar, Box, Button, Container, Grid, Link, TextField, Typography} from '@mui/material'; // Assuming MUI components are used
+import axios from 'axios';
+import {Avatar, Box, Button, Container, Grid, Link, TextField, Typography} from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const SignUp = () => {

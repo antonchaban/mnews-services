@@ -11,7 +11,7 @@ const AuthComponent = () => {
     const userId = cookies['USER_ID'];
 
     if (token) {
-        const decodedToken = jwtDecode(token); // Use jwtDecode instead of jwt_decode
+        const decodedToken = jwtDecode(token);
         username = decodedToken.sub;
         isLoggedIn = true;
     }
