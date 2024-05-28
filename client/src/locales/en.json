@@ -6,6 +6,7 @@
   "articleList.date": "Date",
   "articleList.close": "Close",
   "articleList.searchPlaceholder": "Search...",
+  "articleList.search": "Search",
   "articleList.allCategories": {
     "ALL_CATEGORIES": "All Categories",
     "U_S_NEWS": "U.S. News",
@@ -73,5 +74,29 @@
       "description_ua": "Description (UA)"
     },
     "create": "Create"
-  }
+  },
+  "profile": {
+    "title": "Profile",
+    "user": "Username",
+    "articles": "Articles",
+    "delete": "Delete Article",
+    "edit": "Edit Article"
+  },
+  "articleEdit": {
+    "editArticle": "Edit Article",
+    "link": "Link",
+    "selectCategory": "Select Category",
+    "selectSource": "Select Source",
+    "title": {
+      "title_en": "Title (EN)",
+      "title_ua": "Title (UA)"
+    },
+    "description": {
+      "description_en": "Description (EN)",
+      "description_ua": "Description (UA)"
+    },
+    "edit": "Edit"
+  },
+  "articleList.edit": "Edit",
+  "articleList.delete": "Delete"
 }

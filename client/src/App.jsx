@@ -1,16 +1,15 @@
-// App.jsx
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import ArticleList from './components/ArticleList';
 import Login from './components/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
-import {useCookies} from "react-cookie"; // Updated import
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { useCookies } from "react-cookie";
 import Cookies from './enums/cookies';
 import SignUp from './components/SignUp';
 import Profile from "./components/Profile";
 import ArticleEdit from "./components/ArticleEdit";
-import ArticleCreate from "./components/ArticleCreate"; // Import ArticleCreate component
+import ArticleCreate from "./components/ArticleCreate";
 import AdminComponent from "./components/AdminComponent";
 import ArticleView from "./components/ArticleView";
 
@@ -31,16 +30,9 @@ const App = () => {
         setUsername(username);
     };
 
-    const handleLogout = () => {
-        removeCookie(Cookies.USER_ID);
-        removeCookie(Cookies.ACCESS_TOKEN);
-        removeCookie(Cookies.REFRESH_TOKEN);
-        window.location.href = '/articles';
-    };
-
     return (
         <Router>
-            <div className="container">
+            <div className="container-fluid" style={{ paddingLeft: 0, paddingRight: 0 }}> {/* Use inline styles to remove padding */}
                 <Header isLoggedIn={isLoggedIn} username={username}/>
                 <main>
                     <Routes>
@@ -64,11 +56,6 @@ const App = () => {
                         <Route path="/profile/:id" element={<Profile/>}/>
                     </Routes>
                 </main>
-                <div className="text-right mt-3">
-                    {isLoggedIn ? (
-                        <button onClick={handleLogout} className="btn btn-danger">Logout</button>
-                    ) : null}
-                </div>
             </div>
         </Router>
     );

@@ -7,6 +7,7 @@
   "articleList.categories": "Категорії",
   "articleList.close": "Закрити",
   "articleList.searchPlaceholder": "Пошук...",
+  "articleList.search": "Шукати",
   "articleList.allCategories": {
     "ALL_CATEGORIES": "Всі категорії",
     "U_S_NEWS": "Новини США",
@@ -66,13 +67,39 @@
     "selectCategory": "Вибрати категорію",
     "selectSource": "Вибрати джерело",
     "title": {
-      "title_en": "Назва (АН)",
-      "title_ua": "Назва (УА)"
+      "title_en": "Назва (АНГЛ)",
+      "title_ua": "Назва (УКР)"
     },
     "description": {
-      "description_en": "Опис (АН)",
-      "description_ua": "Опис (УА)"
+      "description_en": "Опис (АНГЛ)",
+      "description_ua": "Опис (УКР)"
     },
     "create": "Створити"
-  }
+  },
+  "profile": {
+    "title": "Профіль",
+    "user": "Ім'я користувача",
+    "articles": "Статті",
+    "delete": "Видалити статтю",
+    "edit": "Редагувати статтю"
+  },
+  "articleEdit": {
+    "editArticle": "Редагувати статтю",
+    "link": "Посилання",
+    "selectCategory": "Вибрати категорію",
+    "selectSource": "Вибрати джерело",
+    "title": {
+      "title_en": "Назва (АНГЛ)",
+      "title_ua": "Назва (УКР)"
+    },
+    "description": {
+      "description_en": "Опис (АНГЛ)",
+      "description_ua": "Опис (УКР)"
+    },
+    "edit": "Редагувати"
+  },
+  "articleList.edit": "Редагувати",
+  "articleList.delete": "Видалити"
 }
+
+
