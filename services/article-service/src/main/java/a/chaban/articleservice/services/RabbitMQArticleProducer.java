@@ -1,8 +1,6 @@
 package a.chaban.articleservice.services;
 
 import a.chaban.articleservice.dtos.ArticleSendDTO;
-import a.chaban.articleservice.models.Article;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

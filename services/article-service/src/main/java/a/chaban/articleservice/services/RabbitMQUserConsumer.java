@@ -1,6 +1,5 @@
 package a.chaban.articleservice.services;
 
-import a.chaban.articleservice.dtos.UserDto;
 import a.chaban.articleservice.models.User;
 import a.chaban.articleservice.repositories.UserRepo;
 import lombok.RequiredArgsConstructor;

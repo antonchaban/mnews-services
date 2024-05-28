@@ -56,12 +56,12 @@ public class ArticleController {
         if (userId == null || userId <= 0) {
             return ResponseEntity.badRequest().build();
         }
-        return ResponseEntity.ok(articleService.createArticle(article, userId)); // todo not tested
+        return ResponseEntity.ok(articleService.createArticle(article, userId));
     }
 
     @PutMapping("articles/{id}")
     public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article,
-                                                 @CookieValue(name = "USER_ID") Long userId) { // todo not tested
+                                                 @CookieValue(name = "USER_ID") Long userId) {
         var articleFromDb = articleService.findById(id);
         if (isUserAdmin(userId) || Objects.equals(articleFromDb.getUserId(), userId)) {
             return ResponseEntity.ok(articleService.updateArticle(article));

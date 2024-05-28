@@ -24,11 +24,14 @@ public class ArticleServiceImpl implements ArticleService {
 
     private final RabbitMQArticleProducer rabbitMQArticleProducer;
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQArticleProducer.class);
+
     @Override
     public Article findById(long artId) {
         return articleRepo.findById(artId).orElse(null);
     }
 
+
+    @Override
     public Article createArticle(ArticleCreateDTO article, Long userId) {
         var newArticle = new Article();
         convertFromDTO(newArticle, article.getLanguage(), article.getTitle(), article.getDescription(),
@@ -69,26 +72,28 @@ public class ArticleServiceImpl implements ArticleService {
         } catch (NullPointerException e) {
             System.out.println("Category is null, setting other value");
             newArticle.getCategories().clear();
-            newArticle.getCategories().add(Category.GEOPOLITICS); // TODO change to unknown
+            newArticle.getCategories().add(Category.UNKNOWN);
         }
     }
 
+    @Override
     public void deleteById(long artId) {
         articleRepo.deleteById(artId);
     }
 
-    public void delete(Article article) {
-        articleRepo.delete(article);
-    }
-
+    @Override
     public List<Article> findAll() {
         return articleRepo.findAll();
     }
 
+
+    @Override
     public List<Article> findAllByUserId(long userId) {
         return articleRepo.findAllByUser(userRepo.findById(userId).orElse(null));
     }
 
+
+    @Override
     public Article updateArticle(ArticleEditDTO articleEditDTO) {
         var article = articleRepo.findById(articleEditDTO.getId()).orElse(null);
         if (article == null) return null;

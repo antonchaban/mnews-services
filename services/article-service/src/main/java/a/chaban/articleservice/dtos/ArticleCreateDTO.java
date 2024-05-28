@@ -1,11 +1,7 @@
 package a.chaban.articleservice.dtos;
 
 
-import a.chaban.articleservice.models.Category;
 import lombok.Data;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Data
 public class ArticleCreateDTO implements DTOEntity {

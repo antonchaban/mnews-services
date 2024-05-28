@@ -1,12 +1,11 @@
 package a.chaban.articleservice.dtos;
 
 
+import a.chaban.articleservice.models.Role;
 import lombok.Data;
 
 import java.util.HashSet;
 import java.util.Set;
-
-import a.chaban.articleservice.models.Role;
 
 @Data
 public class UserDto {

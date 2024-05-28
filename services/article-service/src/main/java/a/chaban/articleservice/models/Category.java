@@ -42,7 +42,6 @@ public enum Category {
     WORLDPOST,
     FIFTY,
     ARTS,
-    DIVORCE
-
-//    todo add UNKNOWN
+    DIVORCE,
+    UNKNOWN
 }

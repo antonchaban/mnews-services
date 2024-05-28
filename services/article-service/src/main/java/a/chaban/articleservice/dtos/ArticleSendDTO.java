@@ -4,7 +4,7 @@ import a.chaban.articleservice.models.Article;
 import lombok.Data;
 
 @Data
-public class ArticleSendDTO{
+public class ArticleSendDTO {
     private Article article;
     private String language;
 }
