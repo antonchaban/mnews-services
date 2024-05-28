@@ -37,26 +37,11 @@ public class ArticleParser {
     private final APIConnector apiConnector;
 
     @Value("${category.url}")
-    public String categoryUrl; // maybe url?
+    public String categoryUrl;
 
     private final RabbitMQArticleProducer rabbitMQArticleProducer;
 
-    /*
     public void parseArticle(String link) throws FeedException, IOException, ParseException {
-        System.out.println("Parsing article from (method parseArticle()): " + link);
-        ArrayList<Article> listFromRss = articleRssParser.doParse(link);
-        for (Article articleRss : listFromRss) {
-            if (isArticleValid(articleRss)) {
-                parseSource(articleRss, link);
-                articleRss.getCategories().add(consumeCategory(articleRss.getTitle_en() + articleRss.getDescription_en()));
-                rabbitMQArticleProducer.sendArticleEntity(articleRss);
-                System.out.println(articleRss);
-            } else {
-                System.out.println("Skipping article due to null/empty fields: " + articleRss);
-            }
-        }
-    }*/
-    public void parseArticle(String link) throws FeedException, IOException, ParseException { // need to check for duplicates in article service
         ArrayList<Article> listFromRss = articleRssParser.doParse(link);
         for (Article articleRss : listFromRss) {
             final String PRAVDA_LINK = "https://www.pravda.com.ua/rss/";
@@ -117,7 +102,6 @@ public class ArticleParser {
                 return Article.Category.valueOf(categoryString.toUpperCase());
             }
         } else {
-            // Handle unsuccessful response
             System.out.println("HTTP POST request failed with response code: " + responseCode);
             return Article.Category.UNKNOWN;
         }
@@ -125,7 +109,6 @@ public class ArticleParser {
 
     private void parseAssist(Article articleRss, String source, Long id) throws IOException, ParseException {
         try {
-//            articleRss.setUserId(customerRepo.findById(ID).get()); todo
             articleRss.setUserId(id);
             if (articleRss.getSource().isEmpty()) articleRss.setSource(source);
             try {
@@ -151,7 +134,6 @@ public class ArticleParser {
                 article.setDescription_ua(translateAPIParser.doParse(article.getDescription_en(), sourceLang, targetLang));
             }
         }
-//        articleRepo.save(article);
     }
 }
 

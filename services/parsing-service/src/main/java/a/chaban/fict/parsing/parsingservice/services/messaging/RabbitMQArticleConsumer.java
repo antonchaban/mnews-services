@@ -19,7 +19,7 @@ public class RabbitMQArticleConsumer {
     private final RabbitMQArticleProducer rabbitMQArticleProducer;
 
     @RabbitListener(queues = {"${rabbitmq.parsing.queue.name}"})
-    public void consume(ArticleSendDTO articleSendDTO) throws IOException, ParseException { // todo send to article service
+    public void consume(ArticleSendDTO articleSendDTO) throws IOException, ParseException {
         LOGGER.info(String.format("Received article to translate -> %s", articleSendDTO.getArticle().toString()));
         switch (articleSendDTO.getLanguage()) {
             case "en":
