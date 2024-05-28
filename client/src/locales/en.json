@@ -4,6 +4,8 @@
   "articleList.viewMore": "View More",
   "articleList.source": "Source",
   "articleList.date": "Date",
+  "articleList.categories": "Categories",
+  "articleList.author": "Author",
   "articleList.close": "Close",
   "articleList.searchPlaceholder": "Search...",
   "articleList.search": "Search",

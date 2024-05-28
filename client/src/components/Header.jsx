@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 const Header = ({ isLoggedIn }) => {
     const location = useLocation();
     const [cookies, setCookie, removeCookie] = useCookies();
+    const userId = cookies['USER_ID'];
 
     const handleLogout = () => {
         removeCookie(Cookies.USER_ID);
@@ -46,7 +47,7 @@ const Header = ({ isLoggedIn }) => {
                         {/* Render Profile link */}
                         {isLoggedIn && (
                             <li className="nav-item">
-                                <Link to="/profile" className="btn btn-outline-light">
+                                <Link to={`/profile/${userId}`} className="btn btn-outline-light">
                                     Profile
                                 </Link>
                             </li>
