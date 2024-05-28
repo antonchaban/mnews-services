@@ -31,16 +31,6 @@ public class AuthFilter extends UsernamePasswordAuthenticationFilter {
     private final AuthenticationManager authManager;
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-/*    @Override
-    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        return authManager.authenticate(token);
-    }*/
 @Override
 public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
     try {
