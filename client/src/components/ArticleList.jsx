@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import SearchBar from './SearchBar';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ArticleList = () => {
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
     const [articles, setArticles] = useState([]);
     const [filteredArticles, setFilteredArticles] = useState([]);
     const navigate = useNavigate();
@@ -22,7 +22,7 @@ const ArticleList = () => {
     }, []);
 
     const handleSearch = (searchParams) => {
-        const {searchTerm, startDate, endDate, selectedCategory, selectedSource} = searchParams;
+        const { searchTerm, startDate, endDate, selectedCategory, selectedSource } = searchParams;
         let filtered = articles.filter(article => {
             if (!article || !article.title_en || !article.description_en || !article.articleDate || !article.categories || !article.source) {
                 return false;
@@ -44,22 +44,28 @@ const ArticleList = () => {
     return (
         <div className="container">
             <h1 className="mb-4">{t('articleList.title')}</h1>
-            <SearchBar onSearch={handleSearch}/>
+            <SearchBar onSearch={handleSearch} />
             <div className="row">
-                {filteredArticles.map(article => (
-                    <div className="col-md-4 mb-4" key={article.id}>
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">{i18n.language === 'en' ? article.title_en : article.title_ua}</h5>
-                                <p className="card-text">{i18n.language === 'en' ? article.description_en : article.description_ua}</p>
-                                <p className="card-text">{t('articleList.source')}: {article.source}</p>
-                                <p className="card-text">{t('articleList.date')}: {new Date(article.articleDate).toLocaleString()}</p>
-                                <button className="btn btn-secondary"
-                                        onClick={() => handleViewMore(article.id)}>{t('articleList.viewMore')}</button>
+                {filteredArticles.length > 0 ? (
+                    filteredArticles.map(article => (
+                        <div className="col-md-4 mb-4" key={article.id}>
+                            <div className="card">
+                                <div className="card-body">
+                                    <h5 className="card-title">{i18n.language === 'en' ? article.title_en : article.title_ua}</h5>
+                                    <p className="card-text">{i18n.language === 'en' ? article.description_en : article.description_ua}</p>
+                                    <p className="card-text">{t('articleList.source')}: {article.source}</p>
+                                    <p className="card-text">{t('articleList.date')}: {new Date(article.articleDate).toLocaleString()}</p>
+                                    <button className="btn btn-secondary"
+                                            onClick={() => handleViewMore(article.id)}>{t('articleList.viewMore')}</button>
+                                </div>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="col-12">
+                        <p className="text-center mt-4">{t('articleList.noArticles')}</p>
                     </div>
-                ))}
+                )}
             </div>
         </div>
     );

@@ -9,6 +9,7 @@
   "articleList.close": "Close",
   "articleList.searchPlaceholder": "Search...",
   "articleList.search": "Search",
+  "articleList.noArticles": "No articles",
   "articleList.allCategories": {
     "ALL_CATEGORIES": "All Categories",
     "U_S_NEWS": "U.S. News",

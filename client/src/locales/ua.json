@@ -9,6 +9,7 @@
   "articleList.close": "Закрити",
   "articleList.searchPlaceholder": "Пошук...",
   "articleList.search": "Шукати",
+    "articleList.noArticles": "Статті відсутні",
   "articleList.allCategories": {
     "ALL_CATEGORIES": "Всі категорії",
     "U_S_NEWS": "Новини США",
