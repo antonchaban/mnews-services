@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios'; // Assuming axios is imported from 'axios' package
-import {Cookies, useCookies} from 'react-cookie'; // Assuming useCookies is imported from 'react-cookie' package
-import { Container, Box, Typography, Avatar, TextField, Button, Grid, Link } from '@mui/material'; // Assuming MUI components are used
+import {useCookies} from 'react-cookie'; // Assuming useCookies is imported from 'react-cookie' package
+import {Avatar, Box, Button, Container, Grid, Link, TextField, Typography} from '@mui/material'; // Assuming MUI components are used
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
@@ -71,13 +71,13 @@ const Login = () => {
                     alignItems: 'center'
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon color="primary" />
+                <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                    <LockOutlinedIcon color="primary"/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign in
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 1}}>
                     <TextField
                         margin="normal"
                         required
@@ -98,7 +98,7 @@ const Login = () => {
                         id="password"
                         autoComplete="current-password"
                     />
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    <Button type="submit" fullWidth variant="contained" sx={{mt: 3, mb: 2}}>
                         Login
                     </Button>
                     <Grid container>

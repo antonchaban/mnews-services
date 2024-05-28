@@ -1,12 +1,12 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import AuthComponent from "./AuthComponent";
 import LanguageSwitcher from "../LanguageSwitcher";
-import { Button } from "@mui/material";
+import {Button} from "@mui/material";
 import Cookies from "../enums/cookies";
-import { useCookies } from "react-cookie";
+import {useCookies} from "react-cookie";
 
-const Header = ({ isLoggedIn }) => {
+const Header = ({isLoggedIn}) => {
     const location = useLocation();
     const [cookies, setCookie, removeCookie] = useCookies();
     const userId = cookies['USER_ID'];
@@ -25,7 +25,8 @@ const Header = ({ isLoggedIn }) => {
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/articles">
-                    <img src="https://tse2.mm.bing.net/th/id/OIG3.0vMky7KhhRNgzUUg1OYO?pid=ImgGn" alt="Multi News Logo" style={{ width: '100px', marginRight: '20px' }} />
+                    <img src="https://tse2.mm.bing.net/th/id/OIG3.0vMky7KhhRNgzUUg1OYO?pid=ImgGn" alt="Multi News Logo"
+                         style={{width: '100px', marginRight: '20px'}}/>
                 </Link>
                 <LanguageSwitcher/> {/* Language switcher component */}
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">

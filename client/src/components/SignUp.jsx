@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios'; // Assuming axios is imported from 'axios' package
-import { Container, Box, Typography, Avatar, TextField, Button, Grid, Link } from '@mui/material'; // Assuming MUI components are used
+import {Avatar, Box, Button, Container, Grid, Link, TextField, Typography} from '@mui/material'; // Assuming MUI components are used
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const SignUp = () => {
@@ -14,13 +14,13 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({...formData, [e.target.name]: e.target.value});
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const { username, password, confirmPassword } = formData;
+        const {username, password, confirmPassword} = formData;
 
         if (password !== confirmPassword) {
             setError("Passwords don't match");
@@ -28,7 +28,7 @@ const SignUp = () => {
         }
 
         try {
-            const newUser = { username, password };
+            const newUser = {username, password};
 
             // Send sign-up request
             const res = await axios.post('http://localhost/api/users', newUser);
@@ -53,13 +53,13 @@ const SignUp = () => {
                     alignItems: 'center'
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon color="primary" />
+                <Avatar sx={{m: 1, bgcolor: 'secondary.main'}}>
+                    <LockOutlinedIcon color="primary"/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+                <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 3}}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -97,7 +97,7 @@ const SignUp = () => {
                             />
                         </Grid>
                     </Grid>
-                    <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    <Button type="submit" fullWidth variant="contained" sx={{mt: 3, mb: 2}}>
                         Sign Up
                     </Button>
                     {error && (

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
-import { jwtDecode } from "jwt-decode";
+import {Link} from 'react-router-dom';
+import {useCookies} from 'react-cookie';
+import {jwtDecode} from "jwt-decode";
 
 const AuthComponent = () => {
     const [cookies] = useCookies(['ACCESS_TOKEN']);

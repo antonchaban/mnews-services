@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { TextField, Button, Select, MenuItem } from '@mui/material';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useTranslation} from 'react-i18next';
+import {Button, MenuItem, Select, TextField} from '@mui/material';
 
 const ArticleEdit = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
 
     const [article, setArticle] = useState({
         id: '',
@@ -21,8 +21,8 @@ const ArticleEdit = () => {
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSource, setSelectedSource] = useState('');
 
-    const categories = t('articleList.allCategories', { returnObjects: true });
-    const sources = t('articleList.allSources', { returnObjects: true });
+    const categories = t('articleList.allCategories', {returnObjects: true});
+    const sources = t('articleList.allSources', {returnObjects: true});
 
     useEffect(() => {
         axios.get(`http://localhost/api/articles/${id}`)
@@ -50,15 +50,15 @@ const ArticleEdit = () => {
     };
 
     const handleTitleChange = (e) => {
-        setArticle(prevState => ({ ...prevState, title: e.target.value }));
+        setArticle(prevState => ({...prevState, title: e.target.value}));
     };
 
     const handleDescriptionChange = (e) => {
-        setArticle(prevState => ({ ...prevState, description: e.target.value }));
+        setArticle(prevState => ({...prevState, description: e.target.value}));
     };
 
     const handleLinkChange = (e) => {
-        setArticle(prevState => ({ ...prevState, link: e.target.value }));
+        setArticle(prevState => ({...prevState, link: e.target.value}));
     };
 
     const handleUpdateArticle = () => {

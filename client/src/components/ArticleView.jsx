@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
-import { useTranslation } from 'react-i18next';
-import { Container, Typography, Button } from '@mui/material';
+import {useCookies} from 'react-cookie';
+import {useTranslation} from 'react-i18next';
+import {Button, Container, Typography} from '@mui/material';
 
 const ArticleView = () => {
-    const { id } = useParams();
+    const {id} = useParams();
     const [article, setArticle] = useState(null);
     const [user, setUser] = useState(null);
     const [cookies] = useCookies(['USER_ID']);
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation();
+    const {t, i18n} = useTranslation();
 
     useEffect(() => {
         axios.get(`http://localhost/api/articles/${id}`)
@@ -54,9 +54,11 @@ const ArticleView = () => {
     return (
         <Container>
             <Typography variant="h2">{i18n.language === 'en' ? article.title_en : article.title_ua}</Typography>
-            <Typography variant="body1">{i18n.language === 'en' ? article.description_en : article.description_ua}</Typography>
+            <Typography
+                variant="body1">{i18n.language === 'en' ? article.description_en : article.description_ua}</Typography>
             <Typography variant="body2">{t('articleList.source')}: {article.source}</Typography>
-            <Typography variant="body2">{t('articleList.date')}: {new Date(article.articleDate).toLocaleString()}</Typography>
+            <Typography
+                variant="body2">{t('articleList.date')}: {new Date(article.articleDate).toLocaleString()}</Typography>
             <Typography variant="body2">{t('articleList.categories')}: {article.categories.join(', ')}</Typography>
             <Typography variant="body2">
                 {t('articleList.author')}: <Link to={`/profile/${article.user.id}`}>{article.user.username}</Link>
@@ -69,7 +71,7 @@ const ArticleView = () => {
                         to={`/articles/${article.id}/edit`}
                         variant="contained"
                         color="primary"
-                        style={{ marginRight: '10px' }}
+                        style={{marginRight: '10px'}}
                     >
                         {t('articleList.edit')}
                     </Button>

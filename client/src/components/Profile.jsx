@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, Link, useParams } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import axios from 'axios';
-import { useCookies } from 'react-cookie';
-import { Container, Typography, List, ListItem, ListItemText, Button } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import {useCookies} from 'react-cookie';
+import {Button, Container, List, ListItem, ListItemText, Typography} from '@mui/material';
+import {useTranslation} from 'react-i18next';
 
 const Profile = () => {
     const [cookies] = useCookies(['USER_ID']);
@@ -11,8 +11,8 @@ const Profile = () => {
     const [profileUser, setProfileUser] = useState(null);
     const [articles, setArticles] = useState([]);
     const navigate = useNavigate();
-    const { t, i18n } = useTranslation();
-    const { id } = useParams();
+    const {t, i18n} = useTranslation();
+    const {id} = useParams();
 
     useEffect(() => {
         if (!cookies.USER_ID) {
@@ -71,7 +71,7 @@ const Profile = () => {
                     to="/admin"
                     variant="contained"
                     color="primary"
-                    style={{ marginBottom: '20px' }}
+                    style={{marginBottom: '20px'}}
                 >
                     Admin Panel
                 </Button>
@@ -87,7 +87,8 @@ const Profile = () => {
                         {(isAdmin || isProfileOwner) && (
                             <>
                                 <Button onClick={() => handleDelete(article.id)}>{t('profile.delete')}</Button>
-                                <Button component={Link} to={`/articles/${article.id}/edit`}>{t('profile.edit')}</Button>
+                                <Button component={Link}
+                                        to={`/articles/${article.id}/edit`}>{t('profile.edit')}</Button>
                             </>
                         )}
                     </ListItem>

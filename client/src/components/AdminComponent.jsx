@@ -1,8 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Select, MenuItem } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+import {
+    Button,
+    Container,
+    MenuItem,
+    Select,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography
+} from '@mui/material';
+import {Link, useNavigate} from 'react-router-dom';
+import {useCookies} from 'react-cookie';
 
 const AdminComponent = () => {
     const [cookies] = useCookies(['USER_ID']);
@@ -46,15 +58,15 @@ const AdminComponent = () => {
     };
 
     const handleRoleChange = (id, role) => {
-        setRoleEdits(prevState => ({ ...prevState, [id]: role }));
+        setRoleEdits(prevState => ({...prevState, [id]: role}));
     };
 
     const handleRoleEdit = (id) => {
         const role = roleEdits[id];
         if (role) {
-            axios.patch(`http://localhost/api/users/${id}`, { id, role: [role] })
+            axios.patch(`http://localhost/api/users/${id}`, {id, role: [role]})
                 .then(response => {
-                    setUsers(users.map(user => user.id === id ? { ...user, role: [role] } : user));
+                    setUsers(users.map(user => user.id === id ? {...user, role: [role]} : user));
                 })
                 .catch(error => {
                     console.error('Error updating user role:', error);
