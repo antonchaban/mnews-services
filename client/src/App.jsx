@@ -35,10 +35,7 @@ const App = () => {
         removeCookie(Cookies.USER_ID);
         removeCookie(Cookies.ACCESS_TOKEN);
         removeCookie(Cookies.REFRESH_TOKEN);
-
-        // Redirect to "/articles" after logout
-        return <Navigate to="/articles" replace/>;
-        //     todo after logout button logout still visible
+        window.location.href = '/articles';
     };
 
     return (
@@ -64,7 +61,7 @@ const App = () => {
                         <Route path="/articles/create" element={<ArticleCreate/>}/>
                         <Route path="/admin" element={<AdminComponent/>}/>
                         <Route path="/articles/:id" element={<ArticleView/>}/>
-                        <Route path="/profile/:id" element={<Profile />} />
+                        <Route path="/profile/:id" element={<Profile/>}/>
                     </Routes>
                 </main>
                 <div className="text-right mt-3">
