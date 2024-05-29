@@ -9,7 +9,7 @@
   "articleList.close": "Закрити",
   "articleList.searchPlaceholder": "Пошук...",
   "articleList.search": "Шукати",
-    "articleList.noArticles": "Статті відсутні",
+  "articleList.noArticles": "Статті відсутні",
   "articleList.allCategories": {
     "ALL_CATEGORIES": "Всі категорії",
     "U_S_NEWS": "Новини США",
@@ -76,7 +76,14 @@
       "description_en": "Опис (АНГЛ)",
       "description_ua": "Опис (УКР)"
     },
-    "create": "Створити"
+    "create": "Створити",
+    "error": {
+      "link": "Посилання обов'язкове",
+      "category": "Категорія обов'язкова",
+      "source": "Джерело обов'язкове",
+      "title": "Назва обов'язкова",
+      "description": "Опис обов'язковий"
+    }
   },
   "profile": {
     "title": "Профіль",
@@ -98,7 +105,14 @@
       "description_en": "Опис (АНГЛ)",
       "description_ua": "Опис (УКР)"
     },
-    "edit": "Редагувати"
+    "update": "Редагувати",
+    "error": {
+      "link": "Посилання обов'язкове",
+      "category": "Категорія обов'язкова",
+      "source": "Джерело обов'язкове",
+      "title": "Назва обов'язкова",
+      "description": "Опис обов'язковий"
+    }
   },
   "articleList.edit": "Редагувати",
   "articleList.delete": "Видалити"

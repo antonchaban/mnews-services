@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {useNavigate, useParams} from 'react-router-dom';
-import {useTranslation} from 'react-i18next';
-import {Button, MenuItem, Select, TextField} from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Button, MenuItem, Select, TextField } from '@mui/material';
 
 const ArticleEdit = () => {
-    const {id} = useParams();
+    const { id } = useParams();
     const navigate = useNavigate();
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
     const [article, setArticle] = useState({
         id: '',
@@ -20,9 +20,10 @@ const ArticleEdit = () => {
     });
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSource, setSelectedSource] = useState('');
+    const [errors, setErrors] = useState({});
 
-    const categories = t('articleList.allCategories', {returnObjects: true});
-    const sources = t('articleList.allSources', {returnObjects: true});
+    const categories = t('articleList.allCategories', { returnObjects: true });
+    const sources = t('articleList.allSources', { returnObjects: true });
 
     useEffect(() => {
         axios.get(`http://localhost/api/articles/${id}`)
@@ -49,36 +50,43 @@ const ArticleEdit = () => {
         setSelectedSource(event.target.value);
     };
 
-    const handleTitleChange = (e) => {
-        setArticle(prevState => ({...prevState, title: e.target.value}));
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setArticle(prevState => ({ ...prevState, [name]: value }));
     };
 
-    const handleDescriptionChange = (e) => {
-        setArticle(prevState => ({...prevState, description: e.target.value}));
-    };
-
-    const handleLinkChange = (e) => {
-        setArticle(prevState => ({...prevState, link: e.target.value}));
+    const validate = () => {
+        let tempErrors = {};
+        tempErrors.link = article.link ? "" : t('articleEdit.error.link');
+        tempErrors.category = selectedCategory ? "" : t('articleEdit.error.category');
+        tempErrors.source = selectedSource ? "" : t('articleEdit.error.source');
+        tempErrors.title = article.title ? "" : t('articleEdit.error.title');
+        tempErrors.description = article.description ? "" : t('articleEdit.error.description');
+        setErrors(tempErrors);
+        return Object.values(tempErrors).every(x => x === "");
     };
 
     const handleUpdateArticle = () => {
-        const updatedArticle = {
-            id: article.id,
-            link: article.link,
-            title: article.title,
-            description: article.description,
-            category: selectedCategory,
-            source: selectedSource,
-            language: i18n.language
-        };
+        if (validate()) {
+            const updatedArticle = {
+                id: article.id,
+                link: article.link,
+                title: article.title,
+                description: article.description,
+                category: selectedCategory,
+                source: selectedSource,
+                language: i18n.language
+            };
 
-        axios.put(`http://localhost/api/articles/${id}`, updatedArticle)
-            .then(response => {
-                console.log('Article updated successfully:', response.data);
-            })
-            .catch(error => {
-                console.error('Error updating article:', error);
-            });
+            axios.put(`http://localhost/api/articles/${id}`, updatedArticle)
+                .then(response => {
+                    console.log('Article updated successfully:', response.data);
+                    navigate('/articles');
+                })
+                .catch(error => {
+                    console.error('Error updating article:', error);
+                });
+        }
     };
 
     return (
@@ -86,11 +94,14 @@ const ArticleEdit = () => {
             <h2>{t('articleEdit.editArticle')}</h2>
             <TextField
                 label={t('articleEdit.link')}
+                name="link"
                 value={article.link}
-                onChange={handleLinkChange}
+                onChange={handleChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
+                error={!!errors.link}
+                helperText={errors.link}
             />
             <Select
                 value={selectedCategory}
@@ -98,43 +109,53 @@ const ArticleEdit = () => {
                 fullWidth
                 margin="dense"
                 variant="outlined"
+                error={!!errors.category}
+                displayEmpty
             >
                 <MenuItem value="">{t('articleEdit.selectCategory')}</MenuItem>
                 {Object.keys(categories).map(categoryKey => (
                     <MenuItem key={categoryKey} value={categoryKey}>{categories[categoryKey]}</MenuItem>
                 ))}
             </Select>
+            <p style={{ color: 'red', margin: '4px 0' }}>{errors.category}</p>
             <Select
                 value={selectedSource}
                 onChange={handleSourceChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
+                error={!!errors.source}
+                displayEmpty
             >
                 <MenuItem value="">{t('articleEdit.selectSource')}</MenuItem>
                 {Object.keys(sources).map(sourceKey => (
                     <MenuItem key={sourceKey} value={sourceKey}>{sources[sourceKey]}</MenuItem>
                 ))}
             </Select>
-
+            <p style={{ color: 'red', margin: '4px 0' }}>{errors.source}</p>
             <TextField
                 label={t(`articleEdit.title.${i18n.language === 'en' ? 'title_en' : 'title_ua'}`)}
+                name="title"
                 value={article.title}
-                onChange={handleTitleChange}
+                onChange={handleChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
+                error={!!errors.title}
+                helperText={errors.title}
             />
-
             <TextField
                 label={t(`articleEdit.description.${i18n.language === 'en' ? 'description_en' : 'description_ua'}`)}
+                name="description"
                 value={article.description}
-                onChange={handleDescriptionChange}
+                onChange={handleChange}
                 fullWidth
                 margin="dense"
                 variant="outlined"
                 multiline
                 rows={4}
+                error={!!errors.description}
+                helperText={errors.description}
             />
 
             <Button onClick={handleUpdateArticle} variant="contained" color="primary">

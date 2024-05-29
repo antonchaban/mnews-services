@@ -76,7 +76,14 @@
       "description_en": "Description (EN)",
       "description_ua": "Description (UA)"
     },
-    "create": "Create"
+    "create": "Create",
+    "error": {
+      "link": "Link is required",
+      "category": "Category is required",
+      "source": "Source is required",
+      "title": "Title is required",
+      "description": "Description is required"
+    }
   },
   "profile": {
     "title": "Profile",
@@ -98,7 +105,14 @@
       "description_en": "Description (EN)",
       "description_ua": "Description (UA)"
     },
-    "edit": "Edit"
+    "update": "Edit",
+    "error": {
+      "link": "Link is required",
+      "category": "Category is required",
+      "source": "Source is required",
+      "title": "Title is required",
+      "description": "Description is required"
+    }
   },
   "articleList.edit": "Edit",
   "articleList.delete": "Delete"
