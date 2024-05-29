@@ -13,8 +13,9 @@ const ArticleList = () => {
     useEffect(() => {
         axios.get('http://localhost/api/articles')
             .then(response => {
-                setArticles(response.data);
-                setFilteredArticles(response.data);
+                const sortedArticles = response.data.sort((a, b) => new Date(b.articleDate) - new Date(a.articleDate));
+                setArticles(sortedArticles);
+                setFilteredArticles(sortedArticles);
             })
             .catch(error => {
                 console.error('Error fetching articles:', error);
@@ -34,7 +35,7 @@ const ArticleList = () => {
             const matchesSource = !selectedSource || selectedSource === "ALL_SOURCES" || article.source === selectedSource;
             return matchesSearchTerm && isWithinDateRange && matchesCategory && matchesSource;
         });
-        setFilteredArticles(filtered);
+        setFilteredArticles(filtered.sort((a, b) => new Date(b.articleDate) - new Date(a.articleDate)));
     };
 
     const handleViewMore = (id) => {
