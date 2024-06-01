@@ -17,6 +17,12 @@ public class RabbitMQUserProducer {
     @Value("${rabbitmq.user.routing.key.name}")
     private String jsonRoutingKey;
 
+    @Value("${rabbitmq.delete.exchange.name}")
+    private String delExchangeName;
+
+    @Value("${rabbitmq.delete.routing.key.name}")
+    private String delJsonRoutingKey;
+
 
     private final RabbitTemplate rabbitTemplate;
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQUserProducer.class);
@@ -29,6 +35,6 @@ public class RabbitMQUserProducer {
 
     public void sendDeleteUser(Long id) {
         LOGGER.info(String.format("Sending json message: %s", id));
-        rabbitTemplate.convertAndSend(exchangeName, jsonRoutingKey, id);
+        rabbitTemplate.convertAndSend(delExchangeName, delJsonRoutingKey, id);
     }
 }

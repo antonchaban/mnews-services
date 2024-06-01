@@ -42,7 +42,7 @@ public class ArticleController {
     @DeleteMapping("articles/{id}")
     public ResponseEntity<Void> deleteArticleById(@PathVariable long id, @CookieValue(name = "USER_ID") Long userId) {
         var article = articleService.findById(id);
-        if (isUserAdmin(userId) || Objects.equals(article.getUserId(), userId)) {
+        if (Objects.equals(article.getUser().getId(), userId) || isUserAdmin(userId)) {
             articleService.deleteById(id);
             return ResponseEntity.ok().build();
         } else {
@@ -63,7 +63,7 @@ public class ArticleController {
     public ResponseEntity<Article> updateArticle(@PathVariable long id, @RequestBody ArticleEditDTO article,
                                                  @CookieValue(name = "USER_ID") Long userId) {
         var articleFromDb = articleService.findById(id);
-        if (isUserAdmin(userId) || Objects.equals(articleFromDb.getUserId(), userId)) {
+        if (Objects.equals(articleFromDb.getUser().getId(), userId) || isUserAdmin(userId)) {
             return ResponseEntity.ok(articleService.updateArticle(article));
 
         } else {

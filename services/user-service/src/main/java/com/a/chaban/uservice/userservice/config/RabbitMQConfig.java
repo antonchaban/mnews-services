@@ -41,6 +41,36 @@ public class RabbitMQConfig {
                 .with(routingKey);
     }
 
+//    ########
+
+    @Value("${rabbitmq.delete.queue.name}")
+    private String deleteQueue;
+
+    @Value("${rabbitmq.delete.exchange.name}")
+    private String deleteExchangeName;
+
+    @Value("${rabbitmq.delete.routing.key.name}")
+    private String deleteRoutingKey;
+
+    @Bean
+    public Queue deleteQueue() {
+        return new Queue(deleteQueue);
+    }
+
+    @Bean
+    public TopicExchange delExchange() {
+        return new TopicExchange(deleteExchangeName);
+    }
+
+
+    @Bean
+    public Binding delBinding() {
+        return BindingBuilder
+                .bind(deleteQueue())
+                .to(delExchange())
+                .with(deleteRoutingKey);
+    }
+
     @Bean
     public MessageConverter jsonMessageConverter() {
         return new Jackson2JsonMessageConverter();

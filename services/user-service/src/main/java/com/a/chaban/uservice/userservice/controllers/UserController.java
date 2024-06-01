@@ -42,7 +42,7 @@ public class UserController {
     @PatchMapping("users/{id}")
     public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserDto user,
                                               @CookieValue(name = "USER_ID") Long userId) {
-        var curUser = userRepo.findById(userId).orElse(null);
+        User curUser = userRepo.findById(userId).orElse(null);
         assert curUser != null;
         if (curUser.getRoles().stream().anyMatch(role -> role.equals(Role.ROLE_ADMIN))) {
             return ResponseEntity.ok(userService.updateUser(id, user));
@@ -53,7 +53,7 @@ public class UserController {
 
     @DeleteMapping("users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id, @CookieValue(name = "USER_ID") Long userId) {
-        var curUser = userRepo.findById(userId).orElse(null);
+        User curUser = userRepo.findById(userId).orElse(null);
         assert curUser != null;
         if (curUser.getRoles().stream().anyMatch(role -> role.equals(Role.ROLE_ADMIN))) {
             userService.deleteUser(id);

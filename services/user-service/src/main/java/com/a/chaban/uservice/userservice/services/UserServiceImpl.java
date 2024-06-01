@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.naming.NameAlreadyBoundException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> findAll() {
-        return userRepo.findAll().stream().map(mappingUtils::mapToUserDto).toList();
+        return userRepo.findAll().stream().map(mappingUtils::mapToUserDto).collect(Collectors.toList());
     }
 
     @Override
@@ -44,7 +45,7 @@ public class UserServiceImpl implements UserService {
         if (userRepo.findByUsername(user.getUsername()) != null) {
             throw new NameAlreadyBoundException("Username already taken");
         }
-        var userEntity = new User();
+        User userEntity = new User();
         userEntity.setUsername(user.getUsername());
         userEntity.setPassword(passwordEncoder.encode(user.getPassword()));
         userEntity.getRoles().add(Role.ROLE_EDITOR);
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto updateUser(Long id, UpdateUserDto user) {
-        var userEntity = userRepo.findById(id).orElse(null);
+        User userEntity = userRepo.findById(id).orElse(null);
         if (userEntity == null) {
             return null;
         }

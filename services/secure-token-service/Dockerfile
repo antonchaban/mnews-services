@@ -1,15 +1,3 @@
-#FROM eclipse-temurin:8-jdk-focal
-#
-#WORKDIR /app
-#
-#COPY .mvn/ .mvn
-#COPY mvnw pom.xml ./
-#RUN ./mvnw dependency:go-offline
-#
-#COPY src ./src
-#
-#CMD ["./mvnw", "spring-boot:run"]
-
 FROM eclipse-temurin:8-jdk-alpine as builder
 
 # Set the working directory inside the container

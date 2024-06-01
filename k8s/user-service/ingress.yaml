@@ -8,8 +8,15 @@ spec:
   rules:
     - http:
         paths:
+          - path: /login
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: user-service-service
+                port:
+                  number: 80
           - path: /api/users
-            pathType: "Prefix"
+            pathType: Prefix
             backend:
               service:
                 name: user-service-service
