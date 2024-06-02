@@ -132,22 +132,22 @@ public class RabbitMQConfig {
     //    ########
 
     @Value("${rabbitmq.delete.queue.name}")
-    private String deleteQueue;
+    private String delQueue;
 
     @Value("${rabbitmq.delete.exchange.name}")
-    private String deleteExchangeName;
+    private String delExchange;
 
     @Value("${rabbitmq.delete.routing.key.name}")
-    private String deleteRoutingKey;
+    private String delRoutingKey;
 
     @Bean
     public Queue deleteQueue() {
-        return new Queue(deleteQueue);
+        return new Queue(delQueue);
     }
 
     @Bean
     public TopicExchange delExchange() {
-        return new TopicExchange(deleteExchangeName);
+        return new TopicExchange(delExchange);
     }
 
 
@@ -156,7 +156,7 @@ public class RabbitMQConfig {
         return BindingBuilder
                 .bind(deleteQueue())
                 .to(delExchange())
-                .with(deleteRoutingKey);
+                .with(delRoutingKey);
     }
 
     @Bean
