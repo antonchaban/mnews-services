@@ -60,6 +60,5 @@ public class Article {
 
 
     @Transient
-//    @ToString.Exclude
     private Long userId;
 }

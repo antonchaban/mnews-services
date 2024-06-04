@@ -3,14 +3,14 @@ kind: Deployment
 metadata:
   name: article-service-deployment
 spec:
-  replicas: 1                      # кількість екземплярів Pod, що буде створено цим Deployment
+  replicas: 1                      
   selector:
     matchLabels:
-      app: article-service               # селектор по якому Deployment зв'язаний з Pod
+      app: article-service               
   template:
     metadata:
       labels:
-        app: article-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
+        app: article-service               
     spec:
       initContainers:
         - name: run-migrations-news
@@ -22,11 +22,11 @@ spec:
             - name: VERSION
               value: "000001"
       containers:
-        - image: antohachaban/article-service:latest       # образ Docker
+        - image: antohachaban/article-service:latest       
           imagePullPolicy: IfNotPresent  
-          name: article-service           # ім'я контейнеру
+          name: article-service           
           ports:
-            - containerPort: 8080  # порт по якому можна звертатись до поди
+            - containerPort: 8080 
           envFrom:
             - configMapRef:
                 name: article-service-config

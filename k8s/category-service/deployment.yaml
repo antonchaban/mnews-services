@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: category-service-deployment
 spec:
-  replicas: 1                      # кількість екземплярів Pod, що буде створено цим Deployment
+  replicas: 1                      
   selector:
     matchLabels:
-      app: category-service               # селектор по якому Deployment зв'язаний з Pod
+      app: category-service               
   template:
     metadata:
       labels:
-        app: category-service               # мітка Pod по якому вона буде зв'язана з Deployment та Service
+        app: category-service               
     spec:
       containers:
-        - image: antohachaban/category-service:latest       # образ Docker
+        - image: antohachaban/category-service:latest       
           imagePullPolicy: IfNotPresent  
-          name: category-service           # ім'я контейнеру
+          name: category-service           
           ports:
-            - containerPort: 5000  # порт по якому можна звертатись до поди
+            - containerPort: 5000  

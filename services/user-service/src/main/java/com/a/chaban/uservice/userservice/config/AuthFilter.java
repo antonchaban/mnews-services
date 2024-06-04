@@ -26,8 +26,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 @AllArgsConstructor
 public class AuthFilter extends UsernamePasswordAuthenticationFilter {
 

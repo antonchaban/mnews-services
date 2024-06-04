@@ -5,7 +5,7 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 80         # порт по якому можна звератись до сервісу
-      targetPort: 8080 # порт контейнера
+    - port: 80         
+      targetPort: 8080 
   selector:
     app: article-service
